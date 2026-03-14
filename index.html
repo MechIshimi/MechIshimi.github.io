@@ -4,19 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Andrew Yang — Mechanical Engineer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
       --black:   #0d0d0d;
-      --mid:     #161616;
-      --surface: #1c1c1c;
-      --border:  #2a2a2a;
-      --white:   #f0f0f0;
-      --orange:  #f06a1a;
-      --muted:   #5a5a5a;
-      --cond:    'Barlow Condensed', sans-serif;
+      --dark:    #131313;
+      --white:   #f8f8f8;
+      --white2:  #ffffff;
+      --orange:  #ff6600;
+      --orange2: #e05500;
+      --border:  #ddd;
+      --darkborder: #242424;
+      --muted:   #999;
+      --stencil: 'Rajdhani', sans-serif;
+      --mono:    'Share Tech Mono', monospace;
       --body:    'Barlow', sans-serif;
-      --mono:    'DM Mono', monospace;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,7 +26,7 @@
 
     body {
       background: var(--black);
-      color: var(--white);
+      color: var(--black);
       font-family: var(--body);
       font-weight: 300;
       overflow-x: hidden;
@@ -35,36 +37,32 @@
       position: fixed;
       inset: 0 0 auto 0;
       z-index: 200;
-      height: 52px;
+      height: 50px;
       display: flex;
       align-items: stretch;
       background: var(--black);
-      border-bottom: 2px solid var(--orange);
+      border-bottom: 3px solid var(--orange);
     }
 
     .nav-logo {
       display: flex;
       align-items: center;
       padding: 0 1.75rem;
-      font-family: var(--cond);
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: 0.22em;
+      font-family: var(--stencil);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--white);
       border-right: 2px solid var(--orange);
       white-space: nowrap;
+      gap: 0.4rem;
     }
 
-    .nav-logo span { color: var(--orange); }
+    .nav-logo .slash { color: var(--orange); }
 
-    .nav-links {
-      display: flex;
-      list-style: none;
-      margin-left: auto;
-    }
-
-    .nav-links li { border-left: 1px solid var(--border); }
+    .nav-links { display: flex; list-style: none; margin-left: auto; }
+    .nav-links li { border-left: 1px solid #1e1e1e; }
 
     .nav-links a {
       display: flex;
@@ -72,54 +70,48 @@
       height: 100%;
       padding: 0 1.4rem;
       font-family: var(--mono);
-      font-size: 0.62rem;
-      color: var(--muted);
+      font-size: 0.65rem;
+      color: #555;
       text-decoration: none;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       transition: color 0.15s, background 0.15s;
     }
 
-    .nav-links a:hover { color: var(--orange); background: rgba(240,106,26,.06); }
+    .nav-links a:hover { color: var(--orange); background: rgba(255,102,0,.07); }
 
-    /* HERO */
+    /* HERO -- Asiimov graphic only here */
     .hero {
       min-height: 100vh;
-      padding-top: 52px;
-      display: grid;
+      padding-top: 50px;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
-    .stripe-a {
+    /* full dark hero */
+    .hero-white {
       position: absolute; inset: 0;
-      background: var(--orange);
-      clip-path: polygon(58% 0%, 100% 0%, 100% 100%, 40% 100%);
-      opacity: .07; pointer-events: none;
+      background: var(--dark);
+      z-index: 0;
     }
-    .stripe-b {
-      position: absolute; inset: 0;
-      background: var(--white);
-      clip-path: polygon(56.5% 0%, 58% 0%, 40% 100%, 38.5% 100%);
-      opacity: .04; pointer-events: none;
-    }
-    .stripe-c {
-      position: absolute; inset: 0;
-      background: var(--white);
-      clip-path: polygon(61% 0%, 62.5% 0%, 44.5% 100%, 43% 100%);
-      opacity: .025; pointer-events: none;
+
+    .hero-dark {
+      display: none;
     }
 
     .hero-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      flex: 1;
       position: relative;
-      z-index: 2;
+      z-index: 10;
+      min-height: calc(100vh - 50px);
     }
 
     .hero-left {
       padding: 4rem 3rem;
-      border-right: 2px solid var(--orange);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -128,173 +120,186 @@
     .eyebrow {
       display: flex;
       align-items: center;
-      gap: .75rem;
+      gap: 0.75rem;
       margin-bottom: 1.5rem;
       opacity: 0;
-      animation: fadeUp .5s ease forwards .2s;
+      animation: fadeUp 0.5s ease forwards 0.2s;
     }
 
-    .eyebrow-bar { width: 2rem; height: 2px; background: var(--orange); flex-shrink: 0; }
+    .eyebrow-bar { width: 2.5rem; height: 3px; background: var(--orange); flex-shrink: 0; }
 
     .eyebrow span {
       font-family: var(--mono);
-      font-size: .62rem;
-      color: var(--orange);
-      letter-spacing: .25em;
+      font-size: 0.62rem;
+      color: var(--orange2);
+      letter-spacing: 0.2em;
       text-transform: uppercase;
     }
 
     .hero-name {
-      font-family: var(--cond);
-      font-weight: 800;
-      font-size: clamp(4.5rem, 9vw, 8.5rem);
-      line-height: .88;
+      font-family: var(--stencil);
+      font-weight: 700;
+      font-size: clamp(4rem, 8.5vw, 8rem);
+      line-height: 0.88;
       text-transform: uppercase;
-      letter-spacing: .01em;
+      letter-spacing: 0.03em;
+      color: var(--white);
       opacity: 0;
-      animation: fadeUp .6s ease forwards .35s;
+      animation: fadeUp 0.6s ease forwards 0.35s;
     }
 
     .hero-name .last { color: var(--orange); display: block; }
 
     .hero-rule {
-      width: 100%; height: 1px;
-      background: var(--border);
+      width: 100%; height: 3px;
+      background: #333;
       margin: 2rem 0;
       position: relative;
       opacity: 0;
-      animation: fadeUp .5s ease forwards .5s;
+      animation: fadeUp 0.5s ease forwards 0.5s;
     }
 
     .hero-rule::after {
       content: '';
       position: absolute;
       left: 0; top: 0;
-      width: 4rem; height: 1px;
+      width: 5rem; height: 3px;
       background: var(--orange);
     }
 
     .hero-subtitle {
       font-family: var(--mono);
-      font-size: .7rem;
-      color: var(--muted);
-      letter-spacing: .18em;
+      font-size: 0.68rem;
+      color: #aaa;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       margin-bottom: 1.25rem;
       opacity: 0;
-      animation: fadeUp .5s ease forwards .55s;
+      animation: fadeUp 0.5s ease forwards 0.55s;
     }
 
     .hero-desc {
-      font-size: .95rem;
-      color: #999;
+      font-size: 0.95rem;
+      color: #bbb;
       line-height: 1.85;
-      max-width: 420px;
+      max-width: 380px;
       opacity: 0;
-      animation: fadeUp .6s ease forwards .65s;
+      animation: fadeUp 0.6s ease forwards 0.65s;
     }
 
     .hero-cta {
       display: flex;
       margin-top: 2.5rem;
       opacity: 0;
-      animation: fadeUp .6s ease forwards .8s;
+      animation: fadeUp 0.6s ease forwards 0.8s;
     }
 
     .btn {
       font-family: var(--mono);
-      font-size: .62rem;
-      letter-spacing: .18em;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      padding: .9rem 1.75rem;
+      padding: 0.9rem 1.75rem;
       text-decoration: none;
-      transition: all .15s;
+      transition: all 0.15s;
       display: inline-block;
     }
 
-    .btn-primary { background: var(--orange); color: #000; font-weight: 500; }
-    .btn-primary:hover { background: #ff7a30; }
-    .btn-ghost { border: 1px solid var(--border); color: var(--muted); margin-left: 1px; }
-    .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+    .btn-primary { background: var(--orange); color: #fff; }
+    .btn-primary:hover { background: var(--orange2); }
+    .btn-ghost { border: 2px solid var(--white); color: var(--white); margin-left: 2px; }
+    .btn-ghost:hover { background: var(--white); color: var(--black); }
 
+    /* dark right stats panel */
     .hero-right {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      padding: 3rem 2.5rem 3rem 4rem;
       opacity: 0;
-      animation: fadeIn .9s ease forwards .6s;
+      animation: fadeIn 0.9s ease forwards 0.6s;
     }
 
     .stat-row {
-      padding: 1.6rem 2.5rem;
-      border-bottom: 1px solid var(--border);
+      padding: 1.4rem 0;
+      border-bottom: 1px solid #1e1e1e;
       position: relative;
-      overflow: hidden;
-      transition: background .2s;
+      transition: padding-left 0.2s;
     }
 
     .stat-row:last-child { border-bottom: none; }
-    .stat-row:hover { background: var(--mid); }
 
     .stat-row::before {
       content: '';
       position: absolute;
-      left: 0; top: 0; bottom: 0;
+      left: -1rem; top: 0; bottom: 0;
       width: 0;
       background: var(--orange);
-      transition: width .2s;
+      transition: width 0.2s;
     }
 
     .stat-row:hover::before { width: 3px; }
 
     .stat-num {
-      font-family: var(--cond);
-      font-weight: 800;
+      font-family: var(--stencil);
+      font-weight: 700;
       font-size: 2.75rem;
       color: var(--orange);
       line-height: 1;
-      letter-spacing: .02em;
+      letter-spacing: 0.05em;
     }
 
     .stat-label {
       font-family: var(--mono);
-      font-size: .58rem;
-      color: var(--muted);
-      letter-spacing: .2em;
+      font-size: 0.58rem;
+      color: #555;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      margin-top: .3rem;
+      margin-top: 0.3rem;
     }
 
     /* TICKER */
     .ticker {
-      border-top: 2px solid var(--orange);
-      border-bottom: 1px solid var(--border);
+      border-top: 3px solid var(--orange);
+      border-bottom: 1px solid #1e1e1e;
       overflow: hidden;
-      padding: .65rem 0;
-      background: var(--mid);
+      padding: 0.65rem 0;
+      background: var(--black);
+      position: relative;
+      z-index: 10;
     }
 
     .ticker-track {
       display: flex;
-      animation: ticker 24s linear infinite;
+      animation: ticker 26s linear infinite;
       white-space: nowrap;
     }
 
     .ticker-item {
       font-family: var(--mono);
-      font-size: .58rem;
-      color: var(--muted);
-      letter-spacing: .2em;
+      font-size: 0.6rem;
+      color: #444;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       padding: 0 2.5rem;
-      border-right: 1px solid var(--border);
+      border-right: 1px solid #1e1e1e;
     }
 
-    .ticker-item b { color: var(--orange); font-weight: 400; margin-right: .6rem; }
+    .ticker-item b { color: var(--orange); font-weight: 400; margin-right: 0.6rem; }
 
     @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    /* SHARED */
+    /* SECTIONS -- clean, no diagonal graphics */
+    .section-white {
+      background: var(--white2);
+      border-top: 3px solid var(--orange);
+    }
+
+    .section-dark {
+      background: var(--dark);
+      border-top: 3px solid var(--orange);
+    }
+
     .wrap { max-width: 1200px; margin: 0 auto; padding: 5rem 2.5rem; }
 
     .sec-head {
@@ -303,37 +308,45 @@
       gap: 1.5rem;
       margin-bottom: 3rem;
       padding-bottom: 1.25rem;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid;
       position: relative;
     }
+
+    .section-white .sec-head { border-color: #e0e0e0; }
+    .section-dark .sec-head { border-color: #222; }
 
     .sec-head::after {
       content: '';
       position: absolute;
-      bottom: -1px; left: 0;
-      width: 5rem; height: 1px;
+      bottom: -2px; left: 0;
+      width: 5rem; height: 2px;
       background: var(--orange);
     }
 
     .sec-tag {
       font-family: var(--mono);
-      font-size: .58rem;
+      font-size: 0.58rem;
       color: var(--orange);
-      letter-spacing: .25em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       white-space: nowrap;
     }
 
     .sec-title {
-      font-family: var(--cond);
-      font-weight: 800;
+      font-family: var(--stencil);
+      font-weight: 700;
       font-size: clamp(2rem, 4vw, 3.25rem);
       text-transform: uppercase;
-      letter-spacing: .05em;
+      letter-spacing: 0.08em;
       line-height: 1;
     }
 
-    .sec-line { flex: 1; height: 1px; background: var(--border); }
+    .section-white .sec-title { color: var(--black); }
+    .section-dark .sec-title { color: var(--white); }
+
+    .sec-line { flex: 1; height: 1px; }
+    .section-white .sec-line { background: #e0e0e0; }
+    .section-dark .sec-line { background: #222; }
 
     /* ABOUT */
     .about-grid {
@@ -343,35 +356,44 @@
       align-items: start;
     }
 
-    .about-text p { font-size: .93rem; color: #999; line-height: 1.9; margin-bottom: 1.25rem; }
-    .about-text strong { color: var(--white); font-weight: 500; }
+    .about-text p {
+      font-size: 0.95rem;
+      color: #222;
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
 
-    .about-table { border: 1px solid var(--border); border-top: 2px solid var(--orange); }
+    .about-text strong { color: var(--black); font-weight: 600; }
+
+    .about-table {
+      border: 2px solid #ddd;
+      border-top: 3px solid var(--orange);
+    }
 
     .t-row {
       display: grid;
       grid-template-columns: 1fr 1.5fr;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid #eee;
     }
 
     .t-row:last-child { border-bottom: none; }
 
     .t-key {
       font-family: var(--mono);
-      font-size: .58rem;
-      color: var(--muted);
-      letter-spacing: .15em;
+      font-size: 0.58rem;
+      color: #999;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      padding: .9rem 1rem;
-      border-right: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
+      padding: 0.9rem 1rem;
+      border-right: 1px solid #eee;
+      background: #fafafa;
     }
 
     .t-val {
       font-family: var(--mono);
-      font-size: .68rem;
-      color: var(--white);
-      padding: .9rem 1rem;
+      font-size: 0.68rem;
+      color: var(--black);
+      padding: 0.9rem 1rem;
       line-height: 1.6;
     }
 
@@ -380,22 +402,25 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-top: 2px solid var(--orange);
+      background: #222;
+      border: 1px solid #222;
+      border-top: 3px solid var(--orange);
     }
 
     .proj-card {
-      background: var(--black);
+      background: var(--dark);
       padding: 2rem 1.75rem;
       position: relative;
       overflow: hidden;
-      transition: background .2s;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: block;
+      color: inherit;
     }
 
-    .proj-card:hover { background: var(--mid); }
+    .proj-card:hover { background: #1a1a1a; }
 
-    .proj-card::before {
+    .proj-card::after {
       content: '';
       position: absolute;
       bottom: 0; left: 0; right: 0;
@@ -403,166 +428,165 @@
       background: var(--orange);
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform .3s ease;
+      transition: transform 0.3s ease;
     }
 
-    .proj-card:hover::before { transform: scaleX(1); }
+    .proj-card:hover::after { transform: scaleX(1); }
 
     .proj-num {
       font-family: var(--mono);
-      font-size: .55rem;
+      font-size: 0.55rem;
       color: var(--orange);
-      letter-spacing: .2em;
+      letter-spacing: 0.2em;
       margin-bottom: 1rem;
     }
 
     .proj-title {
-      font-family: var(--cond);
+      font-family: var(--stencil);
       font-weight: 700;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       text-transform: uppercase;
-      letter-spacing: .04em;
+      letter-spacing: 0.06em;
       line-height: 1.1;
-      margin-bottom: .35rem;
+      margin-bottom: 0.35rem;
+      color: var(--white);
     }
 
     .proj-sub {
       font-family: var(--mono);
-      font-size: .58rem;
+      font-size: 0.58rem;
       color: var(--orange);
-      letter-spacing: .12em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       margin-bottom: 1rem;
     }
 
-    .proj-desc { font-size: .82rem; color: #888; line-height: 1.8; margin-bottom: 1.5rem; }
+    .proj-desc { font-size: 0.82rem; color: #888; line-height: 1.8; margin-bottom: 1.5rem; }
 
-    .proj-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
     .tag {
       font-family: var(--mono);
-      font-size: .53rem;
-      letter-spacing: .1em;
+      font-size: 0.53rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: .25rem .6rem;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      transition: border-color .2s, color .2s;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid #2a2a2a;
+      color: #555;
+      transition: border-color 0.2s, color 0.2s;
     }
 
-    .proj-card:hover .tag { border-color: rgba(240,106,26,.35); color: #aaa; }
+    .proj-card:hover .tag { border-color: rgba(255,102,0,.4); color: #999; }
 
     /* SKILLS */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-top: 2px solid var(--orange);
+      background: #e0e0e0;
+      border: 1px solid #e0e0e0;
+      border-top: 3px solid var(--orange);
     }
 
-    .skill-cell { background: var(--black); padding: 1.5rem 1.25rem; transition: background .2s; }
-    .skill-cell:hover { background: var(--mid); }
+    .skill-cell { background: var(--white2); padding: 1.5rem 1.25rem; transition: background 0.2s; }
+    .skill-cell:hover { background: #f5f5f5; }
 
     .skill-cat {
-      font-family: var(--cond);
+      font-family: var(--stencil);
       font-weight: 700;
-      font-size: .82rem;
+      font-size: 0.9rem;
       color: var(--orange);
-      letter-spacing: .2em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       margin-bottom: 1.1rem;
-      padding-bottom: .6rem;
-      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid #e0e0e0;
     }
 
-    .skill-list { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
 
     .skill-list li {
       font-family: var(--mono);
-      font-size: .67rem;
+      font-size: 0.67rem;
       color: #888;
-      padding-left: .75rem;
-      border-left: 2px solid var(--border);
+      padding-left: 0.75rem;
+      border-left: 2px solid #e0e0e0;
       line-height: 1.5;
-      transition: color .15s, border-color .15s;
+      transition: color 0.15s, border-color 0.15s;
     }
 
-    .skill-cell:hover .skill-list li { color: var(--white); border-color: var(--orange); }
+    .skill-cell:hover .skill-list li { color: var(--black); border-color: var(--orange); }
 
     /* CONNECT */
     .connect-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-top: 2px solid var(--orange);
+      background: #222;
+      border: 1px solid #222;
+      border-top: 3px solid var(--orange);
     }
 
     .connect-card {
-      background: var(--black);
+      background: var(--dark);
       padding: 2.25rem 2rem;
       text-decoration: none;
       display: flex;
       flex-direction: column;
-      gap: .4rem;
+      gap: 0.4rem;
       position: relative;
-      overflow: hidden;
-      transition: background .2s;
+      transition: background 0.2s;
     }
 
-    .connect-card:hover { background: var(--mid); }
+    .connect-card:hover { background: #1a1a1a; }
 
     .connect-card::after {
       content: '↗';
       position: absolute;
       top: 1.5rem; right: 1.5rem;
       font-size: 1rem;
-      color: var(--muted);
-      transition: color .2s, transform .2s;
+      color: #333;
+      transition: color 0.2s, transform 0.2s;
     }
 
     .connect-card:hover::after { color: var(--orange); transform: translate(3px,-3px); }
 
     .connect-platform {
       font-family: var(--mono);
-      font-size: .58rem;
+      font-size: 0.58rem;
       color: var(--orange);
-      letter-spacing: .22em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
     }
 
     .connect-name {
-      font-family: var(--cond);
+      font-family: var(--stencil);
       font-weight: 700;
       font-size: 1.5rem;
       text-transform: uppercase;
-      letter-spacing: .04em;
+      letter-spacing: 0.06em;
       color: var(--white);
     }
 
     .connect-detail {
       font-family: var(--mono);
-      font-size: .62rem;
-      color: var(--muted);
-      margin-top: .2rem;
+      font-size: 0.62rem;
+      color: #555;
+      margin-top: 0.2rem;
     }
 
     /* FOOTER */
     footer {
-      border-top: 1px solid var(--border);
+      background: var(--black);
+      border-top: 3px solid var(--orange);
       padding: 1.5rem 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    footer p { font-family: var(--mono); font-size: .58rem; color: var(--muted); letter-spacing: .12em; }
+    footer p { font-family: var(--mono); font-size: 0.58rem; color: #444; letter-spacing: 0.12em; }
     footer span { color: var(--orange); }
-
-    .divider { width: 100%; height: 1px; background: var(--border); }
 
     /* ANIMATIONS */
     @keyframes fadeUp {
@@ -577,7 +601,9 @@
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .hero-inner { grid-template-columns: 1fr; }
-      .hero-left { border-right: none; border-bottom: 2px solid var(--orange); padding: 3rem 1.5rem; }
+      .hero-white { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
+      .hero-dark { clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); }
+      .hero-left { padding: 3rem 1.5rem; }
       .hero-right { display: none; }
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
       .projects-grid { grid-template-columns: 1fr; }
@@ -585,7 +611,7 @@
       .connect-grid { grid-template-columns: 1fr; }
       .wrap { padding: 3.5rem 1.25rem; }
       .nav-links { display: none; }
-      footer { flex-direction: column; gap: .75rem; text-align: center; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
     }
   </style>
 </head>
@@ -593,7 +619,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">A<span>Y</span> // MECH ENG</div>
+  <div class="nav-logo">A<span class="slash">//</span>Y &nbsp; MECH ENG</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#projects">Projects</a></li>
@@ -604,9 +630,9 @@
 
 <!-- HERO -->
 <div class="hero">
-  <div class="stripe-a"></div>
-  <div class="stripe-b"></div>
-  <div class="stripe-c"></div>
+  <div class="hero-white"></div>
+  <div class="hero-dark"></div>
+
   <div class="hero-inner">
     <div class="hero-left">
       <div class="eyebrow">
@@ -627,6 +653,7 @@
         <a href="#connect" class="btn btn-ghost">Connect</a>
       </div>
     </div>
+
     <div class="hero-right">
       <div class="stat-row">
         <div class="stat-num">MS</div>
@@ -679,219 +706,217 @@
 </div>
 
 <!-- ABOUT -->
-<div class="divider"></div>
-<div class="wrap" id="about">
-  <div class="sec-head">
-    <span class="sec-tag">// 01</span>
-    <h2 class="sec-title">About</h2>
-    <div class="sec-line"></div>
-  </div>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>Mechanical engineer with a background in <strong>structural fabrication, hardware test and validation, and rapid prototyping</strong>. Drawn to high-ownership environments where design decisions have direct hardware consequences and iteration is measured in days, not quarters.</p>
-      <p>At CMU Racing I designed and fabricated chassis components, led TIG welding operations across steel and titanium, and built a torsional stiffness validation rig from scratch. At Westinghouse I owned test procedures and hardware validation on the eVinci microreactor program in a fast-paced, small-team environment.</p>
-      <p>Currently pursuing an FAA Private Pilot License and Part 107 commercial UAS certificate. Seeking roles in defense and aerospace where the engineering is close to the metal.</p>
+<div class="section-white">
+  <div class="wrap" id="about">
+    <div class="sec-head">
+      <span class="sec-tag">// 01</span>
+      <h2 class="sec-title">About</h2>
+      <div class="sec-line"></div>
     </div>
-    <div class="about-table">
-      <div class="t-row">
-        <div class="t-key">Degree</div>
-        <div class="t-val">BS + MS, MechE — CMU</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Mechanical engineer with a background in <strong>structural fabrication, hardware test and validation, and rapid prototyping</strong>. Drawn to high-ownership environments where design decisions have direct hardware consequences and iteration is measured in days, not quarters.</p>
+        <p>At CMU Racing I designed and fabricated chassis components, led TIG welding operations across steel and titanium, and built a torsional stiffness validation rig from scratch. At Westinghouse I owned test procedures and hardware validation on the eVinci microreactor program in a fast-paced, small-team environment.</p>
+        <p>Currently pursuing an FAA Private Pilot License and Part 107 commercial UAS certificate. Seeking roles in defense and aerospace where the engineering is close to the metal.</p>
       </div>
-      <div class="t-row">
-        <div class="t-key">Location</div>
-        <div class="t-val">Pittsburgh, PA</div>
-      </div>
-      <div class="t-row">
-        <div class="t-key">Current Role</div>
-        <div class="t-val">Transient Analysis Eng. I — Westinghouse</div>
-      </div>
-      <div class="t-row">
-        <div class="t-key">Certifications</div>
-        <div class="t-val">FE / Engineer-In-Training<br>FAA PPL (In Progress)<br>FAA Part 107 (In Progress)</div>
-      </div>
-      <div class="t-row">
-        <div class="t-key">Target Sector</div>
-        <div class="t-val">Defense &amp; Aerospace</div>
-      </div>
-      <div class="t-row">
-        <div class="t-key">Contact</div>
-        <div class="t-val">ahyang@duck.com</div>
+      <div class="about-table">
+        <div class="t-row">
+          <div class="t-key">Degree</div>
+          <div class="t-val">BS + MS, MechE — CMU</div>
+        </div>
+        <div class="t-row">
+          <div class="t-key">Location</div>
+          <div class="t-val">Pittsburgh, PA</div>
+        </div>
+        <div class="t-row">
+          <div class="t-key">Current Role</div>
+          <div class="t-val">Transient Analysis Eng. I — Westinghouse</div>
+        </div>
+        <div class="t-row">
+          <div class="t-key">Certifications</div>
+          <div class="t-val">FE / Engineer-In-Training<br>FAA PPL (In Progress)<br>FAA Part 107 (In Progress)</div>
+        </div>
+        <div class="t-row">
+          <div class="t-key">Target Sector</div>
+          <div class="t-val">Defense &amp; Aerospace</div>
+        </div>
+        <div class="t-row">
+          <div class="t-key">Contact</div>
+          <div class="t-val">ahyang@duck.com</div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- PROJECTS -->
-<div class="divider"></div>
-<div class="wrap" id="projects">
-  <div class="sec-head">
-    <span class="sec-tag">// 02</span>
-    <h2 class="sec-title">Projects</h2>
-    <div class="sec-line"></div>
-  </div>
-  <div class="projects-grid">
-
-    <div class="proj-card">
-      <div class="proj-num">// 001</div>
-      <div class="proj-title">Mechanical Energy Recovery Bicycle</div>
-      <div class="proj-sub">CMU Capstone · Most Innovative — Design Expo</div>
-      <p class="proj-desc">Designed and manufactured a purely mechanical drivetrain that stores kinetic energy via an elastic mechanism during deceleration and releases it at low speeds. No electronics, no batteries. Operates entirely through mechanical advantage and material elasticity, requiring precise tolerance control and iterative fabrication.</p>
-      <div class="proj-tags">
-        <span class="tag">Mechanical Design</span>
-        <span class="tag">CAD</span>
-        <span class="tag">Fabrication</span>
-        <span class="tag">Drivetrain</span>
-        <span class="tag">Award Winner</span>
-      </div>
+<div class="section-dark">
+  <div class="wrap" id="projects">
+    <div class="sec-head">
+      <span class="sec-tag">// 02</span>
+      <h2 class="sec-title">Projects</h2>
+      <div class="sec-line"></div>
     </div>
+    <div class="projects-grid">
 
-    <div class="proj-card">
-      <div class="proj-num">// 002</div>
-      <div class="proj-title">FPV Wheeled Drone</div>
-      <div class="proj-sub">Personal Build · $100 Budget</div>
-      <p class="proj-desc">Ground-based FPV RC vehicle built on a $100 budget from scrap materials. Acrylic chassis with custom 3D-printed wheg wheels for rough terrain. Dual Arduino setup via I2C, motor control via PWM, and an IMU-based head tracking FPV system. Responsible for all hardware wiring and integration.</p>
-      <div class="proj-tags">
-        <span class="tag">3D Printing</span>
-        <span class="tag">Arduino</span>
-        <span class="tag">FPV</span>
-        <span class="tag">Hardware Integration</span>
-        <span class="tag">IMU</span>
-      </div>
+      <a href="project-1.html" class="proj-card">
+        <div class="proj-num">// 001</div>
+        <div class="proj-title">Mechanical Energy Recovery Bicycle</div>
+        <div class="proj-sub">CMU Capstone · Most Innovative — Design Expo</div>
+        <p class="proj-desc">Designed and manufactured a purely mechanical drivetrain that stores kinetic energy via an elastic mechanism during deceleration and releases it at low speeds. No electronics, no batteries.</p>
+        <div class="proj-tags">
+          <span class="tag">Mechanical Design</span>
+          <span class="tag">CAD</span>
+          <span class="tag">Fabrication</span>
+          <span class="tag">Award Winner</span>
+        </div>
+      </a>
+
+      <a href="project-2.html" class="proj-card">
+        <div class="proj-num">// 002</div>
+        <div class="proj-title">FPV Wheeled Drone</div>
+        <div class="proj-sub">Personal Build · $100 Budget</div>
+        <p class="proj-desc">Ground-based FPV RC vehicle built from scrap materials. Acrylic chassis with custom 3D-printed wheg wheels, dual Arduino setup via I2C, and IMU-based head tracking FPV system.</p>
+        <div class="proj-tags">
+          <span class="tag">3D Printing</span>
+          <span class="tag">Arduino</span>
+          <span class="tag">FPV</span>
+          <span class="tag">Hardware Integration</span>
+        </div>
+      </a>
+
+      <a href="project-3.html" class="proj-card">
+        <div class="proj-num">// 003</div>
+        <div class="proj-title">CMR Torsional Stiffness Rig</div>
+        <div class="proj-sub">Carnegie Mellon Racing · 23E Chassis</div>
+        <p class="proj-desc">Designed and built a torsional stiffness validation rig from scratch to characterize the 23E Formula SAE chassis. Ran tests and fed findings back to chassis designers.</p>
+        <div class="proj-tags">
+          <span class="tag">Test Design</span>
+          <span class="tag">Structural Analysis</span>
+          <span class="tag">Formula SAE</span>
+        </div>
+      </a>
+
+      <a href="project-4.html" class="proj-card">
+        <div class="proj-num">// 004</div>
+        <div class="proj-title">CMR Chassis Fabrication</div>
+        <div class="proj-sub">Carnegie Mellon Racing · Welding Captain</div>
+        <p class="proj-desc">Led welding operations for a Formula SAE vehicle. Designed jigs and fixtures, TIG welded steel and titanium components, and trained team members on welding technique.</p>
+        <div class="proj-tags">
+          <span class="tag">TIG Welding</span>
+          <span class="tag">Titanium</span>
+          <span class="tag">Jig Design</span>
+          <span class="tag">Formula SAE</span>
+        </div>
+      </a>
+
+      <a href="project-5.html" class="proj-card">
+        <div class="proj-num">// 005</div>
+        <div class="proj-title">CMR Driver Interface System</div>
+        <div class="proj-sub">Carnegie Mellon Racing · Subsystem Lead</div>
+        <p class="proj-desc">Led design and fabrication of driver interface components from CAD and FEA through composite fabrication and final integration on a Formula SAE competition vehicle.</p>
+        <div class="proj-tags">
+          <span class="tag">Composites</span>
+          <span class="tag">CAD</span>
+          <span class="tag">FEA</span>
+          <span class="tag">Team Lead</span>
+        </div>
+      </a>
+
+      <a href="project-6.html" class="proj-card">
+        <div class="proj-num">// 006</div>
+        <div class="proj-title">CMU Buggy Composite Body</div>
+        <div class="proj-sub">Carnegie Mellon University · Manufacturing</div>
+        <p class="proj-desc">Contributed to composite manufacturing for CMU's Buggy program. Hands-on fabrication of composite body components requiring precise layup and finishing work.</p>
+        <div class="proj-tags">
+          <span class="tag">Composites</span>
+          <span class="tag">Layup</span>
+          <span class="tag">Manufacturing</span>
+        </div>
+      </a>
+
     </div>
-
-    <div class="proj-card">
-      <div class="proj-num">// 003</div>
-      <div class="proj-title">CMR Torsional Stiffness Rig</div>
-      <div class="proj-sub">Carnegie Mellon Racing · 23E Chassis</div>
-      <p class="proj-desc">Designed and built a torsional stiffness validation rig from scratch to characterize the 23E Formula SAE competition chassis. Ran tests, analyzed results, and fed findings directly back to chassis designers to inform structural improvements.</p>
-      <div class="proj-tags">
-        <span class="tag">Test Design</span>
-        <span class="tag">Structural Analysis</span>
-        <span class="tag">Fabrication</span>
-        <span class="tag">Formula SAE</span>
-        <span class="tag">Data Analysis</span>
-      </div>
-    </div>
-
-    <div class="proj-card">
-      <div class="proj-num">// 004</div>
-      <div class="proj-title">CMR Chassis Fabrication</div>
-      <div class="proj-sub">Carnegie Mellon Racing · Welding Captain</div>
-      <p class="proj-desc">Led welding operations for a Formula SAE competition vehicle. Designed welding jigs and fixtures for repeatability and dimensional accuracy, TIG welded steel and titanium structural components, and reviewed designs for manufacturability. Trained team members on TIG welding across multiple materials.</p>
-      <div class="proj-tags">
-        <span class="tag">TIG Welding</span>
-        <span class="tag">Titanium</span>
-        <span class="tag">Jig Design</span>
-        <span class="tag">Formula SAE</span>
-        <span class="tag">Manufacturing</span>
-      </div>
-    </div>
-
-    <div class="proj-card">
-      <div class="proj-num">// 005</div>
-      <div class="proj-title">CMR Driver Interface System</div>
-      <div class="proj-sub">Carnegie Mellon Racing · Subsystem Lead</div>
-      <p class="proj-desc">Led design and fabrication of driver interface components for a Formula SAE competition vehicle. Managed a small sub-team through the full design cycle from CAD and FEA to composite fabrication and final integration. Coordinated with chassis, ergonomics, and other subsystem leads to meet fit, safety, and weight targets.</p>
-      <div class="proj-tags">
-        <span class="tag">Composites</span>
-        <span class="tag">CAD</span>
-        <span class="tag">FEA</span>
-        <span class="tag">Team Lead</span>
-        <span class="tag">Formula SAE</span>
-      </div>
-    </div>
-
-    <div class="proj-card">
-      <div class="proj-num">// 006</div>
-      <div class="proj-title">CMU Buggy Composite Body</div>
-      <div class="proj-sub">Carnegie Mellon University · Manufacturing</div>
-      <p class="proj-desc">Contributed to composite manufacturing for CMU's Buggy program, one of the university's longest-running engineering competitions. Hands-on fabrication of composite body components requiring precise layup and finishing work.</p>
-      <div class="proj-tags">
-        <span class="tag">Composites</span>
-        <span class="tag">Layup</span>
-        <span class="tag">Manufacturing</span>
-      </div>
-    </div>
-
   </div>
 </div>
 
 <!-- SKILLS -->
-<div class="divider"></div>
-<div class="wrap" id="skills">
-  <div class="sec-head">
-    <span class="sec-tag">// 03</span>
-    <h2 class="sec-title">Skills</h2>
-    <div class="sec-line"></div>
-  </div>
-  <div class="skills-grid">
-    <div class="skill-cell">
-      <div class="skill-cat">Analysis</div>
-      <ul class="skill-list">
-        <li>Finite Element Analysis</li>
-        <li>ANSYS Mechanical</li>
-        <li>Thermal / Hydraulic Analysis</li>
-        <li>MATLAB</li>
-        <li>Mathcad</li>
-      </ul>
+<div class="section-white">
+  <div class="wrap" id="skills">
+    <div class="sec-head">
+      <span class="sec-tag">// 03</span>
+      <h2 class="sec-title">Skills</h2>
+      <div class="sec-line"></div>
     </div>
-    <div class="skill-cell">
-      <div class="skill-cat">Fabrication</div>
-      <ul class="skill-list">
-        <li>TIG Welding</li>
-        <li>Composites Layup</li>
-        <li>Manual Machining</li>
-        <li>CNC Machining</li>
-        <li>Soldering (THT)</li>
-      </ul>
-    </div>
-    <div class="skill-cell">
-      <div class="skill-cat">Test &amp; Validation</div>
-      <ul class="skill-list">
-        <li>Test Planning</li>
-        <li>LabVIEW</li>
-        <li>Hardware Validation</li>
-        <li>GD&amp;T</li>
-        <li>Technical Documentation</li>
-      </ul>
-    </div>
-    <div class="skill-cell">
-      <div class="skill-cat">Design</div>
-      <ul class="skill-list">
-        <li>SolidWorks</li>
-        <li>Siemens NX</li>
-        <li>AutoCAD</li>
-        <li>Rapid Prototyping</li>
-        <li>3D Printing</li>
-      </ul>
+    <div class="skills-grid">
+      <div class="skill-cell">
+        <div class="skill-cat">Analysis</div>
+        <ul class="skill-list">
+          <li>Finite Element Analysis</li>
+          <li>ANSYS Mechanical</li>
+          <li>Thermal / Hydraulic Analysis</li>
+          <li>MATLAB</li>
+          <li>Mathcad</li>
+        </ul>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cat">Fabrication</div>
+        <ul class="skill-list">
+          <li>TIG Welding</li>
+          <li>Composites Layup</li>
+          <li>Manual Machining</li>
+          <li>CNC Machining</li>
+          <li>Soldering (THT)</li>
+        </ul>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cat">Test &amp; Validation</div>
+        <ul class="skill-list">
+          <li>Test Planning</li>
+          <li>LabVIEW</li>
+          <li>Hardware Validation</li>
+          <li>GD&amp;T</li>
+          <li>Technical Documentation</li>
+        </ul>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-cat">Design</div>
+        <ul class="skill-list">
+          <li>SolidWorks</li>
+          <li>Siemens NX</li>
+          <li>AutoCAD</li>
+          <li>Rapid Prototyping</li>
+          <li>3D Printing</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- CONNECT -->
-<div class="divider"></div>
-<div class="wrap" id="connect">
-  <div class="sec-head">
-    <span class="sec-tag">// 04</span>
-    <h2 class="sec-title">Connect</h2>
-    <div class="sec-line"></div>
-  </div>
-  <div class="connect-grid">
-    <a href="https://www.linkedin.com/in/ahyang2003/" class="connect-card" target="_blank" rel="noopener">
-      <div class="connect-platform">// LinkedIn</div>
-      <div class="connect-name">Andrew Yang</div>
-      <div class="connect-detail">linkedin.com/in/ahyang2003</div>
-    </a>
-    <a href="https://github.com/mechishimi" class="connect-card" target="_blank" rel="noopener">
-      <div class="connect-platform">// GitHub</div>
-      <div class="connect-name">mechishimi</div>
-      <div class="connect-detail">github.com/mechishimi</div>
-    </a>
-    <a href="mailto:ahyang@duck.com" class="connect-card">
-      <div class="connect-platform">// Email</div>
-      <div class="connect-name">Get In Touch</div>
-      <div class="connect-detail">ahyang@duck.com</div>
-    </a>
+<div class="section-dark">
+  <div class="wrap" id="connect">
+    <div class="sec-head">
+      <span class="sec-tag">// 04</span>
+      <h2 class="sec-title">Connect</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="connect-grid">
+      <a href="https://www.linkedin.com/in/ahyang2003/" class="connect-card" target="_blank" rel="noopener">
+        <div class="connect-platform">// LinkedIn</div>
+        <div class="connect-name">Andrew Yang</div>
+        <div class="connect-detail">linkedin.com/in/ahyang2003</div>
+      </a>
+      <a href="https://github.com/mechishimi" class="connect-card" target="_blank" rel="noopener">
+        <div class="connect-platform">// GitHub</div>
+        <div class="connect-name">mechishimi</div>
+        <div class="connect-detail">github.com/mechishimi</div>
+      </a>
+      <a href="mailto:ahyang@duck.com" class="connect-card">
+        <div class="connect-platform">// Email</div>
+        <div class="connect-name">Get In Touch</div>
+        <div class="connect-detail">ahyang@duck.com</div>
+      </a>
+    </div>
   </div>
 </div>
 
