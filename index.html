@@ -70,7 +70,7 @@
       height: 100%;
       padding: 0 1.4rem;
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       color: #555;
       text-decoration: none;
       letter-spacing: 0.15em;
@@ -130,7 +130,7 @@
 
     .eyebrow span {
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.72rem;
       color: var(--orange2);
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -169,7 +169,7 @@
 
     .hero-subtitle {
       font-family: var(--mono);
-      font-size: 0.68rem;
+      font-size: 0.8rem;
       color: #aaa;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -196,7 +196,7 @@
 
     .btn {
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.72rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       padding: 0.9rem 1.75rem;
@@ -240,6 +240,53 @@
 
     .stat-row:hover::before { width: 3px; }
 
+    .stat-expand-hint {
+      font-size: 1rem;
+      color: var(--orange);
+      vertical-align: middle;
+      transition: transform 0.2s;
+      display: inline-block;
+    }
+
+    .stat-expandable:hover .stat-expand-hint { transform: rotate(180deg); }
+
+    .stat-breakdown {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .stat-expandable:hover .stat-breakdown {
+      max-height: 10rem;
+      opacity: 1;
+    }
+
+    .breakdown-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      padding: 0.3rem 0;
+      border-top: 1px solid #1e1e1e;
+      margin-top: 0.4rem;
+    }
+
+    .breakdown-val {
+      font-family: var(--stencil);
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--orange);
+      min-width: 2rem;
+    }
+
+    .breakdown-label {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: #555;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
     .stat-num {
       font-family: var(--stencil);
       font-weight: 700;
@@ -251,7 +298,7 @@
 
     .stat-label {
       font-family: var(--mono);
-      font-size: 0.58rem;
+      font-size: 0.8rem;
       color: #555;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -277,7 +324,7 @@
 
     .ticker-item {
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.72rem;
       color: #444;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -325,7 +372,7 @@
 
     .sec-tag {
       font-family: var(--mono);
-      font-size: 0.58rem;
+      font-size: 0.8rem;
       color: var(--orange);
       letter-spacing: 0.25em;
       text-transform: uppercase;
@@ -380,7 +427,7 @@
 
     .t-key {
       font-family: var(--mono);
-      font-size: 0.58rem;
+      font-size: 0.8rem;
       color: #999;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -391,7 +438,7 @@
 
     .t-val {
       font-family: var(--mono);
-      font-size: 0.68rem;
+      font-size: 0.8rem;
       color: var(--black);
       padding: 0.9rem 1rem;
       line-height: 1.6;
@@ -435,7 +482,7 @@
 
     .proj-num {
       font-family: var(--mono);
-      font-size: 0.55rem;
+      font-size: 0.75rem;
       color: var(--orange);
       letter-spacing: 0.2em;
       margin-bottom: 1rem;
@@ -454,7 +501,7 @@
 
     .proj-sub {
       font-family: var(--mono);
-      font-size: 0.58rem;
+      font-size: 0.8rem;
       color: var(--orange);
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -553,7 +600,7 @@
 
     .connect-platform {
       font-family: var(--mono);
-      font-size: 0.58rem;
+      font-size: 0.8rem;
       color: var(--orange);
       letter-spacing: 0.22em;
       text-transform: uppercase;
@@ -570,7 +617,7 @@
 
     .connect-detail {
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.72rem;
       color: #555;
       margin-top: 0.2rem;
     }
@@ -585,7 +632,7 @@
       align-items: center;
     }
 
-    footer p { font-family: var(--mono); font-size: 0.58rem; color: #444; letter-spacing: 0.12em; }
+    footer p { font-family: var(--mono); font-size: 0.8rem; color: #444; letter-spacing: 0.12em; }
     footer span { color: var(--orange); }
 
     /* ANIMATIONS */
@@ -644,7 +691,7 @@
         <span class="last">Yang</span>
       </h1>
       <div class="hero-rule"></div>
-      <div class="hero-subtitle">CMU MechE MS &nbsp;·&nbsp; Hardware Test &amp; Fabrication &nbsp;·&nbsp; Defense &amp; Aerospace</div>
+      <div class="hero-subtitle">CMU Mechanical Engineering &nbsp;·&nbsp; Hardware Test &amp; Fabrication</div>
       <p class="hero-desc">
         Mechanical engineer who does his best work close to the hardware. Background in structural fabrication, test engineering, and rapid prototyping. Most effective in high-ownership environments where the pace is real.
       </p>
@@ -655,13 +702,33 @@
     </div>
 
     <div class="hero-right">
-      <div class="stat-row">
-        <div class="stat-num">MS</div>
-        <div class="stat-label">Carnegie Mellon University</div>
+      <div class="stat-row stat-expandable">
+        <div class="stat-num">2 <span class="stat-expand-hint">▾</span></div>
+        <div class="stat-label">Degrees from Carnegie Mellon</div>
+        <div class="stat-breakdown">
+          <div class="breakdown-item">
+            <span class="breakdown-val">BS</span>
+            <span class="breakdown-label">Bachelor of Science, Mechanical Engineering — May 2024</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="breakdown-val">MS</span>
+            <span class="breakdown-label">Master of Science, Mechanical Engineering — Dec 2024</span>
+          </div>
+        </div>
       </div>
-      <div class="stat-row">
-        <div class="stat-num">4+</div>
-        <div class="stat-label">Years Hardware Engineering</div>
+      <div class="stat-row stat-expandable">
+        <div class="stat-num">4+ <span class="stat-expand-hint">▾</span></div>
+        <div class="stat-label">Years Mechanical Engineering</div>
+        <div class="stat-breakdown">
+          <div class="breakdown-item">
+            <span class="breakdown-val">1.5</span>
+            <span class="breakdown-label">Professional (Westinghouse)</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="breakdown-val">3</span>
+            <span class="breakdown-label">CMU Racing (Formula SAE)</span>
+          </div>
+        </div>
       </div>
       <div class="stat-row">
         <div class="stat-num">FE</div>
@@ -742,7 +809,7 @@
         </div>
         <div class="t-row">
           <div class="t-key">Contact</div>
-          <div class="t-val"><a href="mailto:ahyang@duck.com" style="color: var(--orange); text-decoration: none;">ahyang@duck.com</a></div>
+          <div class="t-val"><a href="/cdn-cgi/l/email-protection#44252c3d252a23042031272f6a272b29" style="color: var(--orange); text-decoration: none;">Send Email</a></div>
         </div>
       </div>
     </div>
@@ -911,11 +978,7 @@
         <div class="connect-name">mechishimi</div>
         <div class="connect-detail">github.com/mechishimi</div>
       </a>
-      <a href="mailto:ahyang@duck.com" class="connect-card">
+      <a href="/cdn-cgi/l/email-protection#a9c8c1d0c8c7cee9cddccac287cac6c4" class="connect-card">
         <div class="connect-platform">// Email</div>
         <div class="connect-name">Get In Touch</div>
-        <div class="connect-detail">ahyang@duck.com</div>
-      </a>
-    </div>
-  </div>
-</div>
+        <div class="c
