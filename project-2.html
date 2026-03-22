@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FPV Reconnaissance Robot — Andrew Yang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:   #0d0d0d;
+      --dark:    #131313;
+      --white:   #f8f8f8;
+      --white2:  #ffffff;
+      --orange:  #ff6600;
+      --orange2: #e05500;
+      --border:  #e0e0e0;
+      --darkborder: #242424;
+      --stencil: 'Rajdhani', sans-serif;
+      --mono:    'Share Tech Mono', monospace;
+      --body:    'Barlow', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--white);
+      font-family: var(--body);
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      height: 50px;
+      display: flex;
+      align-items: stretch;
+      background: var(--black);
+      border-bottom: 3px solid var(--orange);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      padding: 0 1.75rem;
+      font-family: var(--stencil);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      border-right: 2px solid var(--orange);
+      white-space: nowrap;
+      text-decoration: none;
+      gap: 0.4rem;
+    }
+
+    .nav-logo .slash { color: var(--orange); }
+    .nav-links { display: flex; list-style: none; margin-left: auto; }
+    .nav-links li { border-left: 1px solid #1e1e1e; }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 1.4rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: #555;
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--orange); background: rgba(255,102,0,.07); }
+
+    .proj-hero {
+      padding-top: 50px;
+      background: var(--dark);
+      border-bottom: 3px solid var(--orange);
+    }
+
+    .proj-hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 3rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: #555;
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      transition: color 0.15s;
+    }
+
+    .back-link:hover { color: var(--orange); }
+    .back-link::before { content: '←'; font-size: 0.9rem; }
+
+    .proj-num {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .proj-title {
+      font-family: var(--stencil);
+      font-weight: 700;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .proj-sub {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--orange);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .proj-meta {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      border: 1px solid var(--darkborder);
+      border-top: 2px solid var(--orange);
+      width: fit-content;
+    }
+
+    .meta-item {
+      padding: 0.75rem 1.5rem;
+      border-right: 1px solid var(--darkborder);
+    }
+
+    .meta-item:last-child { border-right: none; }
+
+    .meta-key {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: #555;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .meta-val {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--white);
+    }
+
+    .gallery-section {
+      background: var(--black);
+      border-bottom: 1px solid var(--darkborder);
+    }
+
+    .gallery-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2.5rem;
+    }
+
+    .gallery-main {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #1a1a1a;
+      border: 1px solid var(--darkborder);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1px;
+      overflow: hidden;
+    }
+
+    .gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #1e1e1e;
+    }
+
+    .gallery-thumbs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+    }
+
+    .thumb {
+      aspect-ratio: 4/3;
+      background: #1a1a1a;
+      border: 1px solid var(--darkborder);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .thumb:hover { border-color: var(--orange); }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #1e1e1e;
+      transition: opacity 0.2s;
+    }
+
+    .thumb:hover img { opacity: 0.8; }
+
+    .thumb-placeholder {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: #2a2a2a;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .content-section {
+      background: var(--white2);
+      border-top: 3px solid var(--orange);
+    }
+
+    .content-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .sec-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .sec-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .content-title {
+      font-family: var(--stencil);
+      font-weight: 700;
+      font-size: 1.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--black);
+      margin-bottom: 1.25rem;
+    }
+
+    .content-body p {
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
+
+    .content-body strong { color: var(--black); font-weight: 500; }
+
+    .sidebar { display: flex; flex-direction: column; gap: 2rem; }
+
+    .sidebar-block {
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--orange);
+    }
+
+    .sidebar-title {
+      font-family: var(--stencil);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--black);
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: #fafafa;
+    }
+
+    .sidebar-list { list-style: none; padding: 0.5rem 0; }
+
+    .sidebar-list li {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: #555;
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar-list li:last-child { border-bottom: none; }
+    .sidebar-list li::before { content: '//'; color: var(--orange); font-size: 0.65rem; }
+
+    footer {
+      background: var(--black);
+      border-top: 3px solid var(--orange);
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p { font-family: var(--mono); font-size: 0.68rem; color: #444; letter-spacing: 0.12em; }
+    footer span { color: var(--orange); }
+
+    @media (max-width: 900px) {
+      .content-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .gallery-thumbs { grid-template-columns: repeat(2, 1fr); }
+      .proj-meta { flex-direction: column; width: 100%; }
+      .meta-item { border-right: none; border-bottom: 1px solid var(--darkborder); }
+      .meta-item:last-child { border-bottom: none; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mainImg = document.getElementById('main-img');
+      const thumbs = document.querySelectorAll('.thumb img');
+      thumbs.forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          const temp = mainImg.src;
+          mainImg.src = thumb.src;
+          thumb.src = temp;
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">A<span class="slash">//</span>Y &nbsp; MECH ENG</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#skills">Skills</a></li>
+    <li><a href="index.html#connect">Connect</a></li>
+  </ul>
+</nav>
+
+<!-- PROJECT HERO -->
+<div class="proj-hero">
+  <div class="proj-hero-inner">
+    <a href="index.html#projects" class="back-link">Back to Projects</a>
+    <div class="proj-num">// Project 002</div>
+    <h1 class="proj-title">FPV Reconnaissance<br>Robot</h1>
+    <div class="proj-sub">CMU Mechatronics Applications · Fall 2023</div>
+    <div class="proj-meta">
+      <div class="meta-item">
+        <div class="meta-key">Year</div>
+        <div class="meta-val">Fall 2023</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-key">Role</div>
+        <div class="meta-val">Hardware, Wiring, FPV & Gimbal Systems</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-key">Team Size</div>
+        <div class="meta-val">3 Members</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-key">Budget</div>
+        <div class="meta-val">$390 / $450</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-key">Status</div>
+        <div class="meta-val">Functional Prototype</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGE GALLERY -->
+<div class="gallery-section">
+  <div class="gallery-inner">
+    <div class="gallery-main">
+      <img id="main-img" src="images/robot-main.jpg" alt="FPV robot main body" />
+    </div>
+    <div class="gallery-thumbs">
+      <div class="thumb"><img src="images/robot-2.jpg" alt="Robot with headlights on" /></div>
+      <div class="thumb"><img src="images/robot-3.jpg" alt="Operator controller and FPV screen" /></div>
+      <div class="thumb"><img src="images/robot-4.jpg" alt="Electrical schematic main body" /></div>
+      <div class="thumb"><img src="images/robot-5.jpg" alt="Electrical schematic operator" /></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-section">
+  <div class="content-inner">
+
+    <div class="content-left">
+      <div class="sec-label">// Overview</div>
+      <h2 class="content-title">Project Overview</h2>
+      <div class="content-body">
+        <p>The goal of this project was to design and build a low-cost reconnaissance robot capable of operating in hazardous environments that are too dangerous for humans to enter directly. The target use case was search and rescue -- a remotely operated platform that lets an operator see, navigate, and assess a situation from a safe distance.</p>
+        <p>The final system consists of two subsystems: a <strong>mobile robot body</strong> that navigates the environment, and an <strong>operator-held controller</strong> that streams live FPV video and allows intuitive camera control. The robot drives via two 12V DC motors, lights up in dark conditions using a NeoPixel LED ring, and streams a live FPV feed back to a screen mounted on the remote. The camera is mounted on a <strong>two-axis gimbal</strong> driven by servo motors that respond in real time to the operator rotating the FPV screen.</p>
+        <p>The project came in under budget at $390 against a $450 allowance, and met four out of five required performance specifications.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top: 2.5rem;">// My Contribution</div>
+      <h2 class="content-title">What I Built</h2>
+      <div class="content-body">
+        <p>I was responsible for all hardware wiring and physical integration on both the robot body and the operator controller. This included routing and soldering connections between the Arduino Mega, TB6612FNG motor driver, DC motors, transceiver, Bluetooth module, and the FPV camera and gimbal system -- working from the electrical schematics we produced as a team.</p>
+        <p>I built and assembled the physical chassis, mounting all components to the acrylic platform and integrating the drive wheels and rear stabilizer. I also set up the <strong>FPV system</strong> -- configuring the camera, pairing it to the FPV screen on the controller, and integrating the two-axis gimbal assembly using servo motors. The gimbal uses an MPU-6050 IMU on the operator side to track rotation of the FPV screen, transmitting orientation data via Bluetooth to the Arduino Mega, which commands the servos to match. I handled procurement and tracked the bill of materials throughout the project, staying within budget despite a motor failure and battery delays in the final week.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top: 2.5rem;">// System Architecture</div>
+      <h2 class="content-title">How It Works</h2>
+      <div class="content-body">
+        <p><strong>Robot body:</strong> An Arduino Mega serves as the central controller. A FlySky transceiver receives drive commands from the RC remote and passes them to the TB6612FNG motor driver, which independently controls the two 12V DC motors for differential steering. An HC-06 Bluetooth module receives orientation data from the operator and commands two servo motors to pan and tilt the FPV camera accordingly.</p>
+        <p><strong>Operator controller:</strong> An Arduino Uno reads 3-axis rotation data from an MPU-6050 IMU attached to the FPV screen. That data is packaged and sent wirelessly via HC-05 Bluetooth to the robot. When the operator tilts the FPV screen, the camera follows. The FPV screen receives a live analog video feed directly from the camera on the robot body, independent of the Bluetooth link.</p>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="sidebar-block">
+        <div class="sidebar-title">My Skills Used</div>
+        <ul class="sidebar-list">
+          <li>Hardware Wiring &amp; Integration</li>
+          <li>Chassis Assembly</li>
+          <li>FPV System Setup</li>
+          <li>Gimbal / Servo Integration</li>
+          <li>Procurement / BOM Tracking</li>
+          <li>Soldering (THT)</li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Key Components</div>
+        <ul class="sidebar-list">
+          <li>Arduino Mega 2560</li>
+          <li>Arduino Uno</li>
+          <li>TB6612FNG Motor Driver</li>
+          <li>MPU-6050 IMU</li>
+          <li>HC-05 / HC-06 Bluetooth</li>
+          <li>2x 12V DC Motors</li>
+          <li>2x Servo Motors (gimbal)</li>
+          <li>FPV Camera + Screen</li>
+          <li>NeoPixel LED Ring</li>
+          <li>FlySky RC Transceiver</li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-title">Key Outcomes</div>
+        <ul class="sidebar-list">
+          <li>4 of 5 required specs met</li>
+          <li>Live FPV feed operational</li>
+          <li>IMU-driven gimbal functional</li>
+          <li>Under budget at $390 / $450</li>
+          <li>Volume under 1 cubic foot</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Andrew Yang &nbsp;<span>//</span>&nbsp; Mechanical Engineer &nbsp;<span>//</span>&nbsp; Pittsburgh, PA</p>
+  <p>Hosted on <span>GitHub Pages</span> &nbsp;·&nbsp; mechishimi.github.io</p>
+</footer>
+
+</body>
+</html>
