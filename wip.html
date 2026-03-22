@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work In Progress — Andrew Yang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:   #0d0d0d;
+      --dark:    #131313;
+      --white:   #f8f8f8;
+      --orange:  #ff6600;
+      --stencil: 'Rajdhani', sans-serif;
+      --mono:    'Share Tech Mono', monospace;
+      --body:    'Barlow', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--dark);
+      color: var(--white);
+      font-family: var(--body);
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      height: 50px;
+      display: flex;
+      align-items: stretch;
+      background: var(--black);
+      border-bottom: 3px solid var(--orange);
+      flex-shrink: 0;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      padding: 0 1.75rem;
+      font-family: var(--stencil);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      border-right: 2px solid var(--orange);
+      white-space: nowrap;
+      text-decoration: none;
+      gap: 0.4rem;
+    }
+
+    .nav-logo .slash { color: var(--orange); }
+
+    .nav-links { display: flex; list-style: none; margin-left: auto; }
+    .nav-links li { border-left: 1px solid #1e1e1e; }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 1.4rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: #555;
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--orange); background: rgba(255,102,0,.07); }
+
+    .wip-body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2.5rem;
+      text-align: center;
+    }
+
+    .wip-inner {
+      max-width: 500px;
+    }
+
+    .wip-tag {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .wip-title {
+      font-family: var(--stencil);
+      font-weight: 700;
+      font-size: clamp(3rem, 8vw, 6rem);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 0.9;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    .wip-title span { color: var(--orange); display: block; }
+
+    .wip-rule {
+      width: 4rem;
+      height: 3px;
+      background: var(--orange);
+      margin: 0 auto 1.5rem;
+    }
+
+    .wip-desc {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #555;
+      letter-spacing: 0.1em;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .back-btn {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.9rem 1.75rem;
+      background: var(--orange);
+      color: #000;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .back-btn:hover { background: #e05500; }
+
+    footer {
+      background: var(--black);
+      border-top: 3px solid var(--orange);
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    footer p { font-family: var(--mono); font-size: 0.68rem; color: #444; letter-spacing: 0.12em; }
+    footer span { color: var(--orange); }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">A<span class="slash">//</span>Y &nbsp; MECH ENG</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#skills">Skills</a></li>
+    <li><a href="index.html#connect">Connect</a></li>
+  </ul>
+</nav>
+
+<div class="wip-body">
+  <div class="wip-inner">
+    <div class="wip-tag">// Status</div>
+    <h1 class="wip-title">Work In<span>Progress</span></h1>
+    <div class="wip-rule"></div>
+    <p class="wip-desc">This project page is currently being built out.<br>Check back soon.</p>
+    <a href="index.html#projects" class="back-btn">← Back to Projects</a>
+  </div>
+</div>
+
+<footer>
+  <p>Andrew Yang &nbsp;<span>//</span>&nbsp; Mechanical Engineer &nbsp;<span>//</span>&nbsp; Pittsburgh, PA</p>
+  <p>Hosted on <span>GitHub Pages</span> &nbsp;·&nbsp; mechishimi.github.io</p>
+</footer>
+
+</body>
+</html>
