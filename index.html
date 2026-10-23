@@ -1,989 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Andrew Yang — Mechanical Engineer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --black:   #0d0d0d;
-      --dark:    #131313;
-      --white:   #f8f8f8;
-      --white2:  #ffffff;
-      --orange:  #ff6600;
-      --orange2: #e05500;
-      --border:  #ddd;
-      --darkborder: #242424;
-      --muted:   #999;
-      --stencil: 'Rajdhani', sans-serif;
-      --mono:    'Share Tech Mono', monospace;
-      --body:    'Barlow', sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--black);
-      color: var(--black);
-      font-family: var(--body);
-      font-weight: 300;
-      overflow-x: hidden;
-    }
-
-    /* NAV */
-    nav {
-      position: fixed;
-      inset: 0 0 auto 0;
-      z-index: 200;
-      height: 50px;
-      display: flex;
-      align-items: stretch;
-      background: var(--black);
-      border-bottom: 3px solid var(--orange);
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      padding: 0 1.75rem;
-      font-family: var(--stencil);
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--white);
-      border-right: 2px solid var(--orange);
-      white-space: nowrap;
-      gap: 0.4rem;
-    }
-
-    .nav-logo .slash { color: var(--orange); }
-
-    .nav-links { display: flex; list-style: none; margin-left: auto; }
-    .nav-links li { border-left: 1px solid #1e1e1e; }
-
-    .nav-links a {
-      display: flex;
-      align-items: center;
-      height: 100%;
-      padding: 0 1.4rem;
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: #555;
-      text-decoration: none;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      transition: color 0.15s, background 0.15s;
-    }
-
-    .nav-links a:hover { color: var(--orange); background: rgba(255,102,0,.07); }
-
-    /* HERO -- Asiimov graphic only here */
-    .hero {
-      min-height: 100vh;
-      padding-top: 50px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* full dark hero */
-    .hero-white {
-      position: absolute; inset: 0;
-      background: var(--dark);
-      z-index: 0;
-    }
-
-    .hero-dark {
-      display: none;
-    }
-
-    .hero-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      flex: 1;
-      position: relative;
-      z-index: 10;
-      min-height: calc(100vh - 50px);
-    }
-
-    .hero-left {
-      padding: 4rem 3rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.5s ease forwards 0.2s;
-    }
-
-    .eyebrow-bar { width: 2.5rem; height: 3px; background: var(--orange); flex-shrink: 0; }
-
-    .eyebrow span {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--orange2);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .hero-name {
-      font-family: var(--stencil);
-      font-weight: 700;
-      font-size: clamp(4rem, 8.5vw, 8rem);
-      line-height: 0.88;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      color: var(--white);
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.35s;
-    }
-
-    .hero-name .last { color: var(--orange); display: block; }
-
-    .hero-rule {
-      width: 100%; height: 3px;
-      background: #333;
-      margin: 2rem 0;
-      position: relative;
-      opacity: 0;
-      animation: fadeUp 0.5s ease forwards 0.5s;
-    }
-
-    .hero-rule::after {
-      content: '';
-      position: absolute;
-      left: 0; top: 0;
-      width: 5rem; height: 3px;
-      background: var(--orange);
-    }
-
-    .hero-subtitle {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: #aaa;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 1.25rem;
-      opacity: 0;
-      animation: fadeUp 0.5s ease forwards 0.55s;
-    }
-
-    .hero-desc {
-      font-size: 0.95rem;
-      color: #bbb;
-      line-height: 1.85;
-      max-width: 380px;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.65s;
-    }
-
-    .hero-cta {
-      display: flex;
-      margin-top: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.8s;
-    }
-
-    .btn {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 0.9rem 1.75rem;
-      text-decoration: none;
-      transition: all 0.15s;
-      display: inline-block;
-    }
-
-    .btn-primary { background: var(--orange); color: #fff; }
-    .btn-primary:hover { background: var(--orange2); }
-    .btn-ghost { border: 2px solid var(--white); color: var(--white); margin-left: 2px; }
-    .btn-ghost:hover { background: var(--white); color: var(--black); }
-
-    /* dark right stats panel */
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 3rem 2.5rem 3rem 4rem;
-      opacity: 0;
-      animation: fadeIn 0.9s ease forwards 0.6s;
-    }
-
-    .stat-row {
-      padding: 1.4rem 0;
-      border-bottom: 1px solid #1e1e1e;
-      position: relative;
-      transition: padding-left 0.2s;
-    }
-
-    .stat-row:last-child { border-bottom: none; }
-
-    .stat-row::before {
-      content: '';
-      position: absolute;
-      left: -1rem; top: 0; bottom: 0;
-      width: 0;
-      background: var(--orange);
-      transition: width 0.2s;
-    }
-
-    .stat-row:hover::before { width: 3px; }
-
-    .stat-expand-hint {
-      font-size: 1rem;
-      color: var(--orange);
-      vertical-align: middle;
-      transition: transform 0.2s;
-      display: inline-block;
-    }
-
-    .stat-expandable:hover .stat-expand-hint { transform: rotate(180deg); }
-
-    .stat-breakdown {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease, opacity 0.3s ease;
-      opacity: 0;
-    }
-
-    .stat-expandable:hover .stat-breakdown {
-      max-height: 10rem;
-      opacity: 1;
-    }
-
-    .breakdown-item {
-      display: flex;
-      align-items: baseline;
-      gap: 0.75rem;
-      padding: 0.3rem 0;
-      border-top: 1px solid #1e1e1e;
-      margin-top: 0.4rem;
-    }
-
-    .breakdown-val {
-      font-family: var(--stencil);
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: var(--orange);
-      min-width: 2rem;
-    }
-
-    .breakdown-label {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: #555;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .stat-num {
-      font-family: var(--stencil);
-      font-weight: 700;
-      font-size: 2.75rem;
-      color: var(--orange);
-      line-height: 1;
-      letter-spacing: 0.05em;
-    }
-
-    .stat-label {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: #555;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-top: 0.3rem;
-    }
-
-    /* TICKER */
-    .ticker {
-      border-top: 3px solid var(--orange);
-      border-bottom: 1px solid #1e1e1e;
-      overflow: hidden;
-      padding: 0.65rem 0;
-      background: var(--black);
-      position: relative;
-      z-index: 10;
-    }
-
-    .ticker-track {
-      display: flex;
-      animation: ticker 26s linear infinite;
-      white-space: nowrap;
-    }
-
-    .ticker-item {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: #444;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 0 2.5rem;
-      border-right: 1px solid #1e1e1e;
-    }
-
-    .ticker-item b { color: var(--orange); font-weight: 400; margin-right: 0.6rem; }
-
-    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-    /* SECTIONS -- clean, no diagonal graphics */
-    .section-white {
-      background: var(--white2);
-      border-top: 3px solid var(--orange);
-    }
-
-    .section-dark {
-      background: var(--dark);
-      border-top: 3px solid var(--orange);
-    }
-
-    .wrap { max-width: 1200px; margin: 0 auto; padding: 5rem 2.5rem; }
-
-    .sec-head {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-      padding-bottom: 1.25rem;
-      border-bottom: 2px solid;
-      position: relative;
-    }
-
-    .section-white .sec-head { border-color: #e0e0e0; }
-    .section-dark .sec-head { border-color: #222; }
-
-    .sec-head::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0;
-      width: 5rem; height: 2px;
-      background: var(--orange);
-    }
-
-    .sec-tag {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--orange);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .sec-title {
-      font-family: var(--stencil);
-      font-weight: 700;
-      font-size: clamp(2rem, 4vw, 3.25rem);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      line-height: 1;
-    }
-
-    .section-white .sec-title { color: var(--black); }
-    .section-dark .sec-title { color: var(--white); }
-
-    .sec-line { flex: 1; height: 1px; }
-    .section-white .sec-line { background: #e0e0e0; }
-    .section-dark .sec-line { background: #222; }
-
-    /* ABOUT */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 3rem;
-      align-items: start;
-    }
-
-    .about-text p {
-      font-size: 0.95rem;
-      color: #222;
-      line-height: 1.9;
-      margin-bottom: 1.25rem;
-    }
-
-    .about-text strong { color: var(--black); font-weight: 600; }
-
-    .about-table {
-      border: 2px solid #ddd;
-      border-top: 3px solid var(--orange);
-    }
-
-    .t-row {
-      display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      border-bottom: 1px solid #eee;
-    }
-
-    .t-row:last-child { border-bottom: none; }
-
-    .t-key {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: #999;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0.9rem 1rem;
-      border-right: 1px solid #eee;
-      background: #fafafa;
-    }
-
-    .t-val {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--black);
-      padding: 0.9rem 1rem;
-      line-height: 1.6;
-    }
-
-    /* PROJECTS */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: #222;
-      border: 1px solid #222;
-      border-top: 3px solid var(--orange);
-    }
-
-    .proj-card {
-      background: var(--dark);
-      padding: 2rem 1.75rem;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.2s;
-      text-decoration: none;
-      display: block;
-      color: inherit;
-    }
-
-    .proj-card:hover { background: #1a1a1a; }
-
-    .proj-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--orange);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-
-    .proj-card:hover::after { transform: scaleX(1); }
-
-    .proj-num {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--orange);
-      letter-spacing: 0.2em;
-      margin-bottom: 1rem;
-    }
-
-    .proj-title {
-      font-family: var(--stencil);
-      font-weight: 700;
-      font-size: 1.3rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      line-height: 1.1;
-      margin-bottom: 0.35rem;
-      color: var(--white);
-    }
-
-    .proj-sub {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--orange);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .proj-desc { font-size: 0.82rem; color: #888; line-height: 1.8; margin-bottom: 1.5rem; }
-
-    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-
-    .tag {
-      font-family: var(--mono);
-      font-size: 0.53rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.6rem;
-      border: 1px solid #2a2a2a;
-      color: #555;
-      transition: border-color 0.2s, color 0.2s;
-    }
-
-    .proj-card:hover .tag { border-color: rgba(255,102,0,.4); color: #999; }
-
-    /* SKILLS */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: #e0e0e0;
-      border: 1px solid #e0e0e0;
-      border-top: 3px solid var(--orange);
-    }
-
-    .skill-cell { background: var(--white2); padding: 1.5rem 1.25rem; transition: background 0.2s; }
-    .skill-cell:hover { background: #f5f5f5; }
-
-    .skill-cat {
-      font-family: var(--stencil);
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: var(--orange);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 1.1rem;
-      padding-bottom: 0.6rem;
-      border-bottom: 2px solid #e0e0e0;
-    }
-
-    .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-
-    .skill-list li {
-      font-family: var(--mono);
-      font-size: 0.67rem;
-      color: #888;
-      padding-left: 0.75rem;
-      border-left: 2px solid #e0e0e0;
-      line-height: 1.5;
-      transition: color 0.15s, border-color 0.15s;
-    }
-
-    .skill-cell:hover .skill-list li { color: var(--black); border-color: var(--orange); }
-
-    /* CONNECT */
-    .connect-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: #222;
-      border: 1px solid #222;
-      border-top: 3px solid var(--orange);
-    }
-
-    .connect-card {
-      background: var(--dark);
-      padding: 2.25rem 2rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      position: relative;
-      transition: background 0.2s;
-    }
-
-    .connect-card:hover { background: #1a1a1a; }
-
-    .connect-card::after {
-      content: '↗';
-      position: absolute;
-      top: 1.5rem; right: 1.5rem;
-      font-size: 1rem;
-      color: #333;
-      transition: color 0.2s, transform 0.2s;
-    }
-
-    .connect-card:hover::after { color: var(--orange); transform: translate(3px,-3px); }
-
-    .connect-platform {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--orange);
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-    }
-
-    .connect-name {
-      font-family: var(--stencil);
-      font-weight: 700;
-      font-size: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--white);
-    }
-
-    .connect-detail {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: #555;
-      margin-top: 0.2rem;
-    }
-
-    /* FOOTER */
-    footer {
-      background: var(--black);
-      border-top: 3px solid var(--orange);
-      padding: 1.5rem 2.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    footer p { font-family: var(--mono); font-size: 0.8rem; color: #444; letter-spacing: 0.12em; }
-    footer span { color: var(--orange); }
-
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-white { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
-      .hero-dark { clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); }
-      .hero-left { padding: 3rem 1.5rem; }
-      .hero-right { display: none; }
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .skills-grid { grid-template-columns: repeat(2, 1fr); }
-      .connect-grid { grid-template-columns: 1fr; }
-      .wrap { padding: 3.5rem 1.25rem; }
-      .nav-links { display: none; }
-      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Andrew Yang — Test Engineer</title>
+  <meta name="description" content="Andrew Yang is a test engineer on SpaceX’s Development Test team. He owns campaigns from stand design through data acquisition and analysis. Based in Woodway, Texas.">
+  <meta name="author" content="Andrew Yang">
+  <meta name="theme-color" content="#0c0c0c">
+  <link rel="canonical" href="https://mechishimi.github.io/">
+  <meta property="og:title" content="Andrew Yang — Test Engineer">
+  <meta property="og:description" content="Test engineer on SpaceX’s Development Test team. Stand design through data acquisition and analysis. Woodway, Texas.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mechishimi.github.io/">
+  <meta property="og:image" content="https://mechishimi.github.io/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Andrew Yang — Test Engineer">
+  <meta name="twitter:description" content="Test engineer on SpaceX’s Development Test team. Stand design through data acquisition and analysis. Woodway, Texas.">
+  <meta name="twitter:image" content="https://mechishimi.github.io/og.png">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/site.css">
+  <script>document.documentElement.classList.add("js");</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Andrew Yang",
+    "jobTitle": "Test Engineer, Development Test",
+    "worksFor": { "@type": "Organization", "name": "SpaceX" },
+    "email": "mailto:ahyang@duck.com",
+    "url": "https://mechishimi.github.io/",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Woodway",
+      "addressRegion": "TX",
+      "addressCountry": "US"
+    },
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Carnegie Mellon University" },
+    "sameAs": [
+      "https://www.linkedin.com/in/ahyang2003/",
+      "https://github.com/MechIshimi"
+    ]
+  }
+  </script>
 </head>
 <body>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">A<span class="slash">//</span>Y &nbsp; MECH ENG</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#connect">Connect</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-white"></div>
-  <div class="hero-dark"></div>
-
-  <div class="hero-inner">
-    <div class="hero-left">
-      <div class="eyebrow">
-        <div class="eyebrow-bar"></div>
-        <span>Mechanical Engineer // Pittsburgh, PA</span>
-      </div>
-      <h1 class="hero-name">
-        Andrew
-        <span class="last">Yang</span>
-      </h1>
-      <div class="hero-rule"></div>
-      <div class="hero-subtitle">CMU Mechanical Engineering &nbsp;·&nbsp; Hardware Test &amp; Fabrication</div>
-      <p class="hero-desc">
-        Mechanical engineer who does his best work close to the hardware. Background in structural fabrication, test engineering, and rapid prototyping. Most effective in high-ownership environments where the pace is real.
-      </p>
-      <div class="hero-cta">
-        <a href="#projects" class="btn btn-primary">View Projects</a>
-        <a href="#connect" class="btn btn-ghost">Connect</a>
-      </div>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="wordmark" href="index.html"><span class="mark" aria-hidden="true"></span>Andrew Yang</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="hero-right">
-      <div class="stat-row stat-expandable">
-        <div class="stat-num">2 <span class="stat-expand-hint">▾</span></div>
-        <div class="stat-label">Degrees from Carnegie Mellon</div>
-        <div class="stat-breakdown">
-          <div class="breakdown-item">
-            <span class="breakdown-val">BS</span>
-            <span class="breakdown-label">Bachelor of Science, Mechanical Engineering — May 2024</span>
-          </div>
-          <div class="breakdown-item">
-            <span class="breakdown-val">MS</span>
-            <span class="breakdown-label">Master of Science, Mechanical Engineering — Dec 2024</span>
+  <main id="content">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-fx" aria-hidden="true">
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
+        <div class="hero-reticle"></div>
+      </div>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">Test engineer · Woodway, Texas</p>
+          <h1 id="hero-title">Andrew<br>Yang</h1>
+          <p class="role">Development Test, SpaceX</p>
+          <p class="lede">I own test campaigns from stand design through data acquisition and analysis.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary magnetic" href="#projects">Selected work</a>
+            <a class="btn btn-ghost" href="mailto:ahyang@duck.com">ahyang@duck.com</a>
           </div>
         </div>
-      </div>
-      <div class="stat-row stat-expandable">
-        <div class="stat-num">4+ <span class="stat-expand-hint">▾</span></div>
-        <div class="stat-label">Years Mechanical Engineering</div>
-        <div class="stat-breakdown">
-          <div class="breakdown-item">
-            <span class="breakdown-val">1.5</span>
-            <span class="breakdown-label">Professional (Westinghouse)</span>
+        <aside class="stats" aria-label="At a glance">
+          <div class="stat">
+            <p class="stat-num"><span class="count" data-to="2">2</span></p>
+            <p class="stat-label">Degrees from Carnegie Mellon</p>
+            <ul>
+              <li>B.S. Mechanical Engineering, May 2024</li>
+              <li>M.S. Mechanical Engineering, December 2024</li>
+            </ul>
           </div>
-          <div class="breakdown-item">
-            <span class="breakdown-val">3</span>
-            <span class="breakdown-label">CMU Racing (Formula SAE)</span>
+          <div class="stat">
+            <p class="stat-num"><span class="count" data-to="5">5</span></p>
+            <p class="stat-label">Years building hardware (incl. Formula SAE)</p>
+            <ul>
+              <li>SpaceX Development Test, June 2026 to present</li>
+              <li>Westinghouse, August 2024 to May 2026</li>
+              <li>Carnegie Mellon Racing, Formula SAE, October 2021 to December 2024</li>
+              <li>Wabtec validation, summer 2023</li>
+            </ul>
+          </div>
+          <div class="stat">
+            <p class="stat-num">FE</p>
+            <p class="stat-label">Passed FE Exam (NCEES)</p>
+            <ul>
+              <li>September 2025</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about" class="band-paper">
+      <div class="wrap reveal">
+        <p class="sec-index">01</p>
+        <h2 class="sec-title">About</h2>
+        <div class="about-grid">
+          <div class="prose">
+            <p>I am a test engineer on the Development Test team at SpaceX in McGregor, Texas. I live in Woodway. A campaign is mine from the stand through acquisition and the numbers that come back.</p>
+            <p>Before SpaceX I was at Westinghouse, first on hardware qualification for the eVinci microreactor and then in transient analysis. I earned a B.S. and an M.S. in mechanical engineering at Carnegie Mellon, and from 2021 to 2024 I worked on Carnegie Mellon Racing in structures, chassis validation, the driver interface, and welding. I also staffed TechSpark, the campus fabrication lab.</p>
+          </div>
+          <dl class="facts">
+            <div>
+              <dt>Based in</dt>
+              <dd>Woodway, Texas</dd>
+            </div>
+            <div>
+              <dt>Role</dt>
+              <dd>Test Engineer, Development Test, SpaceX</dd>
+            </div>
+            <div>
+              <dt>School</dt>
+              <dd>B.S. and M.S. Mechanical Engineering, Carnegie Mellon</dd>
+            </div>
+            <div>
+              <dt>Exam</dt>
+              <dd>Passed FE Exam (NCEES), September 2025</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="beyond">
+          <p class="beyond-label">Beyond work</p>
+          <p>English, native. Korean, limited working proficiency. Working toward an FAA private pilot license, with Part 107 to follow.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="wrap reveal">
+        <p class="sec-index">02</p>
+        <h2 class="sec-title">Experience</h2>
+        <div class="jobs">
+          <article class="job">
+            <div>
+              <p class="when">June 2026 – present</p>
+              <p class="where">McGregor, Texas</p>
+            </div>
+            <div>
+              <h3>Test Engineer, Development Test</h3>
+              <p class="org">SpaceX</p>
+              <p>I own test campaigns on the Development Test team, from stand design through data acquisition and analysis.</p>
+            </div>
+          </article>
+          <article class="job">
+            <div>
+              <p class="when">Nov 2025 – May 2026</p>
+              <p class="where">Pittsburgh, Pennsylvania</p>
+            </div>
+            <div>
+              <h3>Transient Analysis Engineer I</h3>
+              <p class="org">Westinghouse Electric Company</p>
+              <p>I ran safety-critical transient simulations for advanced nuclear systems. Behavioral models improved predictive accuracy for off-normal events by 20% over prior failure-rate data. I turned the results into hardware requirements with design and safety teams.</p>
+            </div>
+          </article>
+          <article class="job">
+            <div>
+              <p class="when">Aug 2024 – Nov 2025</p>
+              <p class="where">Pittsburgh, Pennsylvania</p>
+            </div>
+            <div>
+              <h3>eVinci Test Engineer I / Intern</h3>
+              <p class="org">Westinghouse Electric Company</p>
+              <p>Hardware qualification for the eVinci microreactor. I wrote test procedures, supervised technician execution, and integrated LabVIEW data acquisition with pressure, temperature, and flow instrumentation. I automated the data pipeline in MATLAB and Python, cutting iteration time by 15%, and used ANSYS during an X-ray root-cause investigation of heat-pipe thermal warping.</p>
+            </div>
+          </article>
+          <article class="job">
+            <div>
+              <p class="when">Summer 2023</p>
+              <p class="where">Erie, Pennsylvania</p>
+            </div>
+            <div>
+              <h3>Validation Intern</h3>
+              <p class="org">Wabtec Corporation</p>
+              <p>I validated fire suppression and pneumatic brake systems on a battery-powered locomotive test stand, and stepped into production work when the plant was short-staffed.</p>
+            </div>
+          </article>
+          <article class="job">
+            <div>
+              <p class="when">Oct 2021 – Dec 2024</p>
+              <p class="where">Pittsburgh, Pennsylvania</p>
+            </div>
+            <div>
+              <h3>Welding lead, driver interface, chassis, structures</h3>
+              <p class="org">Carnegie Mellon Racing</p>
+              <p>Formula SAE. I led TIG welding in steel, aluminum, and titanium, with jigs and fixtures for the fabrication team, plus chassis validation against FEA and composite driver-interface hardware.</p>
+            </div>
+          </article>
+          <article class="job">
+            <div>
+              <p class="when">May 2024 · Dec 2024</p>
+              <p class="where">Pittsburgh, Pennsylvania</p>
+            </div>
+            <div>
+              <h3>B.S. and M.S. Mechanical Engineering</h3>
+              <p class="org">Carnegie Mellon University</p>
+              <p>B.S. May 2024, GPA 3.82. M.S. December 2024, GPA 4.0.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="band-paper">
+      <div class="wrap reveal">
+        <p class="sec-index">03</p>
+        <h2 class="sec-title">Projects</h2>
+        <div class="featured">
+          <a class="card card-link" href="project-1.html">
+            <div class="card-media">
+              <img src="images/bike-main.webp" width="613" height="436" alt="CAD render of the mechanical energy recovery bicycle" loading="lazy" decoding="async">
+            </div>
+            <div class="card-body">
+              <p class="kicker">Capstone · Spring 2024</p>
+              <h3>Mechanical energy recovery bicycle</h3>
+              <p>A drivetrain that stores energy in an elastic band while the bike coasts and gives it back from a stop. No motor and no battery.</p>
+              <p>Most Innovative, CMU Design Expo 2024.</p>
+              <p class="card-go">Read the build</p>
+            </div>
+          </a>
+          <a class="card card-link" href="project-2.html">
+            <div class="card-media">
+              <img src="images/robot-main.webp" width="611" height="308" alt="FPV reconnaissance robot, main body" loading="lazy" decoding="async">
+            </div>
+            <div class="card-body">
+              <p class="kicker">Mechatronics · Fall 2023</p>
+              <h3>FPV reconnaissance robot</h3>
+              <p>A ground robot for remote search. Live FPV video, a two-axis gimbal steered by an IMU, and Bluetooth HC-05 / HC-06 between the operator and the vehicle. Built for $390 of a $450 budget.</p>
+              <p class="card-go">Read the build</p>
+            </div>
+          </a>
+        </div>
+        <div class="summaries">
+          <article class="card card-static">
+            <p class="kicker">Summary · Carnegie Mellon Racing</p>
+            <h3>Welding lead</h3>
+            <p>TIG welding in steel, aluminum, and titanium for a Formula SAE car. Designed jigs and fixtures, including a modular jig system that cut weld setup time by 50%, and trained the fabrication team.</p>
+          </article>
+          <article class="card card-static">
+            <p class="kicker">Summary · 2022–2023</p>
+            <h3>Torsional stiffness rig</h3>
+            <p>Designed and built a rig to measure chassis rigidity on the 2023 Formula SAE car and compare it with FEA. The measurements went back into structural decisions.</p>
+          </article>
+          <article class="card card-static">
+            <p class="kicker">Summary · 2023–2024</p>
+            <h3>Driver interface</h3>
+            <p>Led driver-interface composites from CAD and FEA through layup and installation. A carbon-fiber headrest came out 50% lighter and still met the structural rules. The layup was shortened by 15%.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="wrap reveal">
+        <p class="sec-index">04</p>
+        <h2 class="sec-title">Skills</h2>
+        <div class="skills">
+          <div>
+            <h3>Test and instrumentation</h3>
+            <ul>
+              <li>Test stand design</li>
+              <li>Validation testing</li>
+              <li>LabVIEW DAQ</li>
+              <li>Pressure, temperature, and flow instrumentation</li>
+              <li>Cryogenic fluids (LOX, LN2) and high-pressure gases (GN2, GHe)</li>
+              <li>Control and interlock logic</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Analysis and software</h3>
+            <ul>
+              <li>ANSYS</li>
+              <li>MATLAB</li>
+              <li>Python</li>
+              <li>REFPROP</li>
+              <li>Transient simulation</li>
+            </ul>
+          </div>
+          <div>
+            <h3>CAD</h3>
+            <ul>
+              <li>Siemens NX</li>
+              <li>SolidWorks</li>
+              <li>AutoCAD (P&amp;ID)</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Fabrication</h3>
+            <ul>
+              <li>TIG welding (steel, aluminum, titanium)</li>
+              <li>CNC and manual machining</li>
+              <li>Composites</li>
+            </ul>
           </div>
         </div>
       </div>
-      <div class="stat-row">
-        <div class="stat-num">FE</div>
-        <div class="stat-label">Engineer-In-Training Certified</div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-num">PPL</div>
-        <div class="stat-label">Private Pilot License (In Progress)</div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-num">107</div>
-        <div class="stat-label">FAA Part 107 UAS (In Progress)</div>
-      </div>
-    </div>
-  </div>
-</div>
+    </section>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-track">
-    <div class="ticker-item"><b>01</b>TIG Welding</div>
-    <div class="ticker-item"><b>02</b>Finite Element Analysis</div>
-    <div class="ticker-item"><b>03</b>Hardware Test &amp; Validation</div>
-    <div class="ticker-item"><b>04</b>ANSYS Mechanical</div>
-    <div class="ticker-item"><b>05</b>Rapid Prototyping</div>
-    <div class="ticker-item"><b>06</b>LabVIEW</div>
-    <div class="ticker-item"><b>07</b>SolidWorks</div>
-    <div class="ticker-item"><b>08</b>Composites Fabrication</div>
-    <div class="ticker-item"><b>09</b>Thermal Analysis</div>
-    <div class="ticker-item"><b>10</b>GD&amp;T</div>
-    <div class="ticker-item"><b>01</b>TIG Welding</div>
-    <div class="ticker-item"><b>02</b>Finite Element Analysis</div>
-    <div class="ticker-item"><b>03</b>Hardware Test &amp; Validation</div>
-    <div class="ticker-item"><b>04</b>ANSYS Mechanical</div>
-    <div class="ticker-item"><b>05</b>Rapid Prototyping</div>
-    <div class="ticker-item"><b>06</b>LabVIEW</div>
-    <div class="ticker-item"><b>07</b>SolidWorks</div>
-    <div class="ticker-item"><b>08</b>Composites Fabrication</div>
-    <div class="ticker-item"><b>09</b>Thermal Analysis</div>
-    <div class="ticker-item"><b>10</b>GD&amp;T</div>
-  </div>
-</div>
-
-<!-- ABOUT -->
-<div class="section-white">
-  <div class="wrap" id="about">
-    <div class="sec-head">
-      <span class="sec-tag">// 01</span>
-      <h2 class="sec-title">About</h2>
-      <div class="sec-line"></div>
-    </div>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>Mechanical engineer with a background in <strong>structural fabrication, hardware test and validation, and rapid prototyping</strong>. Drawn to high-ownership environments where design decisions have direct hardware consequences and iteration is measured in days, not quarters.</p>
-        <p>At CMU Racing I designed and fabricated chassis components, led TIG welding operations across steel and titanium, and built a torsional stiffness validation rig from scratch. At Westinghouse I owned test procedures and hardware validation on the eVinci microreactor program in a fast-paced, small-team environment.</p>
-        <p>Currently pursuing an FAA Private Pilot License and Part 107 commercial UAS certificate. Seeking roles in defense and aerospace where the engineering is close to the metal.</p>
-      </div>
-      <div class="about-table">
-        <div class="t-row">
-          <div class="t-key">Degree</div>
-          <div class="t-val">BS + MS, MechE — CMU</div>
-        </div>
-        <div class="t-row">
-          <div class="t-key">Location</div>
-          <div class="t-val">Pittsburgh, PA</div>
-        </div>
-        <div class="t-row">
-          <div class="t-key">Current Role</div>
-          <div class="t-val">Transient Analysis Eng. I — Westinghouse</div>
-        </div>
-        <div class="t-row">
-          <div class="t-key">Certifications</div>
-          <div class="t-val">FE / Engineer-In-Training<br>FAA PPL (In Progress)<br>FAA Part 107 (In Progress)</div>
-        </div>
-        <div class="t-row">
-          <div class="t-key">Target Sector</div>
-          <div class="t-val">Defense &amp; Aerospace</div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- PROJECTS -->
-<div class="section-dark">
-  <div class="wrap" id="projects">
-    <div class="sec-head">
-      <span class="sec-tag">// 02</span>
-      <h2 class="sec-title">Projects</h2>
-      <div class="sec-line"></div>
-    </div>
-    <div class="projects-grid">
-
-      <a href="project-1.html" class="proj-card">
-        <div class="proj-num">// 001</div>
-        <div class="proj-title">Mechanical Energy Recovery Bicycle</div>
-        <div class="proj-sub">CMU Capstone · Spring 2024 · Most Innovative — Design Expo</div>
-        <p class="proj-desc">Designed and manufactured a purely mechanical drivetrain that stores kinetic energy via an elastic mechanism during deceleration and releases it at low speeds. No electronics, no batteries.</p>
-        <div class="proj-tags">
-          <span class="tag">Mechanical Design</span>
-          <span class="tag">CAD</span>
-          <span class="tag">Fabrication</span>
-          <span class="tag">Award Winner</span>
-        </div>
-      </a>
-
-      <a href="project-2.html" class="proj-card">
-        <div class="proj-num">// 002</div>
-        <div class="proj-title">FPV Wheeled Drone</div>
-        <div class="proj-sub">CMU Mechatronics · Fall 2023</div>
-        <p class="proj-desc">Ground-based FPV RC vehicle built from scrap materials. Acrylic chassis with custom 3D-printed wheg wheels, dual Arduino setup via I2C, and IMU-based head tracking FPV system.</p>
-        <div class="proj-tags">
-          <span class="tag">3D Printing</span>
-          <span class="tag">Arduino</span>
-          <span class="tag">FPV</span>
-          <span class="tag">Hardware Integration</span>
-        </div>
-      </a>
-
-      <a href="wip.html" class="proj-card">
-        <div class="proj-num">// 003</div>
-        <div class="proj-title">CMR Chassis Fabrication</div>
-        <div class="proj-sub">Carnegie Mellon Racing · 2022-2024</div>
-        <p class="proj-desc">Led welding operations for a Formula SAE vehicle. Designed jigs and fixtures, TIG welded steel and titanium components, and trained team members on welding technique.</p>
-        <div class="proj-tags">
-          <span class="tag">TIG Welding</span>
-          <span class="tag">Titanium</span>
-          <span class="tag">Jig Design</span>
-          <span class="tag">Formula SAE</span>
-        </div>
-      </a>
-
-      <a href="wip.html" class="proj-card">
-        <div class="proj-num">// 004</div>
-        <div class="proj-title">CMR Driver Interface System</div>
-        <div class="proj-sub">Carnegie Mellon Racing · 2023-2024</div>
-        <p class="proj-desc">Led design and fabrication of driver interface components from CAD and FEA through composite fabrication and final integration on a Formula SAE competition vehicle.</p>
-        <div class="proj-tags">
-          <span class="tag">Composites</span>
-          <span class="tag">CAD</span>
-          <span class="tag">FEA</span>
-          <span class="tag">Team Lead</span>
-        </div>
-      </a>
-
-      <a href="wip.html" class="proj-card">
-        <div class="proj-num">// 005</div>
-        <div class="proj-title">CMR Torsional Stiffness Rig</div>
-        <div class="proj-sub">Carnegie Mellon Racing · 2022-2023</div>
-        <p class="proj-desc">Designed and built a torsional stiffness validation rig from scratch to characterize the 23E Formula SAE chassis. Ran tests and fed findings back to chassis designers.</p>
-        <div class="proj-tags">
-          <span class="tag">Test Design</span>
-          <span class="tag">Structural Analysis</span>
-          <span class="tag">Formula SAE</span>
-        </div>
-      </a>
-
-      <a href="wip.html" class="proj-card">
-        <div class="proj-num">// 006</div>
-        <div class="proj-title">CMU Buggy Composite Body</div>
-        <div class="proj-sub">Carnegie Mellon University · 2022-2023</div>
-        <p class="proj-desc">Contributed to composite manufacturing for CMU's Buggy program. Hands-on fabrication of composite body components requiring precise layup and finishing work.</p>
-        <div class="proj-tags">
-          <span class="tag">Composites</span>
-          <span class="tag">Layup</span>
-          <span class="tag">Manufacturing</span>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</div>
-
-<!-- SKILLS -->
-<div class="section-white">
-  <div class="wrap" id="skills">
-    <div class="sec-head">
-      <span class="sec-tag">// 03</span>
-      <h2 class="sec-title">Skills</h2>
-      <div class="sec-line"></div>
-    </div>
-    <div class="skills-grid">
-      <div class="skill-cell">
-        <div class="skill-cat">Design</div>
-        <ul class="skill-list">
-          <li>SolidWorks</li>
-          <li>Siemens NX</li>
-          <li>AutoCAD</li>
-          <li>Rapid Prototyping</li>
-          <li>3D Printing</li>
+    <section id="contact">
+      <div class="wrap reveal">
+        <p class="sec-index">05</p>
+        <h2 class="sec-title">Contact</h2>
+        <p class="contact-email"><a href="mailto:ahyang@duck.com">ahyang@duck.com</a></p>
+        <ul class="contact-list">
+          <li>
+            <a href="https://www.linkedin.com/in/ahyang2003/" target="_blank" rel="noopener noreferrer">LinkedIn<span>linkedin.com/in/ahyang2003</span></a>
+          </li>
+          <li>
+            <a href="https://github.com/MechIshimi" target="_blank" rel="noopener noreferrer">GitHub<span>github.com/MechIshimi</span></a>
+          </li>
         </ul>
       </div>
-      <div class="skill-cell">
-        <div class="skill-cat">Analysis</div>
-        <ul class="skill-list">
-          <li>Finite Element Analysis</li>
-          <li>ANSYS Mechanical</li>
-          <li>Thermal / Hydraulic Analysis</li>
-          <li>MATLAB</li>
-          <li>Mathcad</li>
-        </ul>
-      </div>
-      <div class="skill-cell">
-        <div class="skill-cat">Fabrication</div>
-        <ul class="skill-list">
-          <li>TIG Welding</li>
-          <li>Composites Layup</li>
-          <li>Manual Machining</li>
-          <li>CNC Machining</li>
-          <li>Soldering (THT)</li>
-        </ul>
-      </div>
-      <div class="skill-cell">
-        <div class="skill-cat">Test &amp; Validation</div>
-        <ul class="skill-list">
-          <li>Test Planning</li>
-          <li>LabVIEW</li>
-          <li>Hardware Validation</li>
-          <li>GD&amp;T</li>
-          <li>Technical Documentation</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+    </section>
+  </main>
 
-<!-- CONNECT -->
-<div class="section-dark">
-  <div class="wrap" id="connect">
-    <div class="sec-head">
-      <span class="sec-tag">// 04</span>
-      <h2 class="sec-title">Connect</h2>
-      <div class="sec-line"></div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>Andrew Yang · Test engineer · Woodway, Texas</p>
+      <p>Hosted on GitHub Pages</p>
     </div>
-    <div class="connect-grid">
-      <a href="https://www.linkedin.com/in/ahyang2003/" class="connect-card" target="_blank" rel="noopener">
-        <div class="connect-platform">// LinkedIn</div>
-        <div class="connect-name">Andrew Yang</div>
-        <div class="connect-detail">linkedin.com/in/ahyang2003</div>
-      </a>
-      <a href="https://github.com/mechishimi" class="connect-card" target="_blank" rel="noopener">
-        <div class="connect-platform">// GitHub</div>
-        <div class="connect-name">mechishimi</div>
-        <div class="connect-detail">github.com/mechishimi</div>
-      </a>
-    </div>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <p>Andrew Yang &nbsp;<span>//</span>&nbsp; Mechanical Engineer &nbsp;<span>//</span>&nbsp; Pittsburgh, PA</p>
-  <p>Hosted on <span>GitHub Pages</span> &nbsp;·&nbsp; mechishimi.github.io</p>
-</footer>
-
+  </footer>
+  <script src="js/site.js" defer></script>
 </body>
 </html>
