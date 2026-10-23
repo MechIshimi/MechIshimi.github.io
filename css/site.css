@@ -433,13 +433,16 @@ a { color: inherit; }
 
 .job:last-child { border-bottom: 1px solid var(--line); }
 
-.when {
+.when,
+.where {
   font-family: var(--mono);
   font-size: 0.8125rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
 }
+
+.where { margin-top: 0.35rem; text-transform: none; letter-spacing: 0; font-size: 0.9375rem; }
 
 .job h3 {
   font-size: clamp(1.25rem, 2vw, 1.5rem);
