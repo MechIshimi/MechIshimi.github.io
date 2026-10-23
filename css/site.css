@@ -433,16 +433,13 @@ a { color: inherit; }
 
 .job:last-child { border-bottom: 1px solid var(--line); }
 
-.when,
-.where {
+.when {
   font-family: var(--mono);
   font-size: 0.8125rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
 }
-
-.where { margin-top: 0.35rem; text-transform: none; letter-spacing: 0; font-size: 0.9375rem; }
 
 .job h3 {
   font-size: clamp(1.25rem, 2vw, 1.5rem);
@@ -467,6 +464,7 @@ a { color: inherit; }
 .summaries {
   grid-template-columns: 1fr 1fr 1fr;
   margin-top: 1rem;
+  align-items: start;
 }
 
 .card {
@@ -533,6 +531,24 @@ a { color: inherit; }
 }
 
 .card-static { padding: 1.2rem 1.25rem 1.35rem; }
+
+.card-shot { display: flex; flex-direction: column; }
+
+.card-media-photo {
+  margin: 0;
+  aspect-ratio: 3 / 4;
+  background: #141414;
+}
+
+.card-media-photo img { object-fit: cover; }
+
+.card .shot-caption {
+  margin-top: 0.35rem;
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-muted);
+}
 
 .card-static p + p { margin-top: 0.55rem; }
 
