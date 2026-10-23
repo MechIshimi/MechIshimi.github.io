@@ -826,8 +826,9 @@ section[id] { scroll-margin-top: 5.25rem; }
   .magnetic { transition: none; }
 }
 
+/* Hidden only after JS adds .wait, and only until .in. No JS means the copy stays visible. */
 @media (prefers-reduced-motion: no-preference) {
-  .reveal.wait {
+  .reveal.wait:not(.in) {
     opacity: 0;
     transform: translateY(16px);
   }

@@ -1,7 +1,8 @@
 /* Motion, all skipped when prefers-reduced-motion: reduce.
    Fine-pointer only: hero crosshair, soft orange glow, grid drift, magnetic buttons.
-   Always (if motion is allowed): section fade-in, count-up of the two real figures.
-   Nav and the gallery run regardless. */
+   Section fade-in only hides nodes JS has marked, skips anything already near the
+   viewport, and reveals the rest after 1.5s if the observer never fires.
+   Count-up covers the two real figures. Nav and the gallery run regardless. */
 (function () {
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -59,13 +60,24 @@
         entry.target.classList.add("in");
         io.unobserve(entry.target);
       });
-    }, { threshold: 0.16 });
+    }, { rootMargin: "0px 0px 12% 0px", threshold: 0.01 });
 
+    var view = window.innerHeight || document.documentElement.clientHeight;
     document.querySelectorAll(".reveal").forEach(function (el) {
-      if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return;
+      var rect = el.getBoundingClientRect();
+      // Already on screen, above it, or just below the fold: never hide.
+      if (rect.top < view + 64) return;
       el.classList.add("wait");
       io.observe(el);
     });
+
+    // If the observer never fires (print, a capture that doesn't scroll), show the copy.
+    window.setTimeout(function () {
+      document.querySelectorAll(".reveal.wait").forEach(function (el) {
+        el.classList.add("in");
+        io.unobserve(el);
+      });
+    }, 1500);
 
     var counts = document.querySelectorAll(".count");
     if (counts.length) {
