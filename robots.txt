@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /wip.html
+
+Sitemap: https://mechishimi.github.io/sitemap.xml
