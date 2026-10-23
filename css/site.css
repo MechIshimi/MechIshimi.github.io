@@ -175,16 +175,6 @@ a { color: inherit; }
 
 .site-nav a:hover { text-decoration: underline; text-underline-offset: 0.25em; }
 
-.site-nav a.nav-resume {
-  background: var(--accent);
-  color: var(--accent-ink);
-  border: 2px solid var(--accent);
-  padding: 0 0.85rem;
-  text-decoration: none;
-}
-
-.nav-resume:hover { text-decoration: none; }
-
 .wrap {
   width: min(var(--max), 100%);
   margin: 0 auto;
@@ -586,7 +576,7 @@ a { color: inherit; }
 .contact-list {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 2rem;
 }
@@ -805,8 +795,6 @@ section[id] { scroll-margin-top: 5.25rem; }
 
   .site-nav a { width: 100%; }
 
-  .nav-resume { justify-content: center; margin-top: 0.35rem; }
-
   .header-inner { flex-wrap: wrap; }
 }
 
@@ -842,6 +830,5 @@ section[id] { scroll-margin-top: 5.25rem; }
 
 @media (forced-colors: active) {
   .btn-primary,
-  .nav-resume,
   .mark { border: 1px solid ButtonText; }
 }
